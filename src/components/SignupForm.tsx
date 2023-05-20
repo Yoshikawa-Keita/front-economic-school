@@ -6,10 +6,18 @@ export type SignupFormData = {
   fullName: string
   email: string
   password: string
+  profileImage: FileList
 }
 
 interface SignupFormProps {
-  onSignup?: (username: string, fullName: string, email: string, userType: number, password: string) => void
+  onSignup?: (
+    username: string,
+    fullName: string,
+    email: string,
+    userType: number,
+    password: string,
+    profileImage: File | null,
+  ) => void
 }
 
 const SignupForm = ({ onSignup }: SignupFormProps) => {
@@ -17,12 +25,28 @@ const SignupForm = ({ onSignup }: SignupFormProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<SignupFormData>()
-  const onSubmit = (data: SignupFormData) => {
-    const { username, fullName, email, password } = data
-    const userType = 0
 
-    onSignup && onSignup(username, fullName, email, userType, password)
+  const profileImage = watch('profileImage')
+  const onSubmit = (data: SignupFormData) => {
+    const { username, fullName, email, password, profileImage } = data
+    const userType = 0 // デフォルトの画像URL
+    let imageUrl = 'default_profile_image.jpg'
+
+    // ユーザーが画像をアップロードした場合
+    if (profileImage && profileImage[0]) {
+      const file = profileImage[0]
+      imageUrl = `${username}.${file.name.split('.').pop()}`
+    }
+
+    // ユーザーが画像をアップロードしなかった場合にデフォルトの画像を使用する
+    const finalProfileImage =
+      profileImage && profileImage[0] ? profileImage[0] : null
+
+    onSignup &&
+      onSignup(username, fullName, email, userType, password, finalProfileImage)
   }
 
   return (
@@ -87,11 +111,23 @@ const SignupForm = ({ onSignup }: SignupFormProps) => {
           </p>
         )}
       </div>
+      <div className="mb-2">
+        <FileUploader
+          onFileSelect={(files: FileList) => setValue('profileImage', files)}
+          message="※ 画像は後で設定/変更可能です"
+          accept=".jpg,.jpeg,.png"
+        />
+        {errors.profileImage && (
+          <p className="text-xs text-red-500 pl-1">
+            プロフィール画像のアップロードに問題があります
+          </p>
+        )}
+      </div>
       <button
         type="submit"
         className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded"
       >
-           サインアップ
+        サインアップ
       </button>
     </form>
   )

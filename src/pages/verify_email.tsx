@@ -1,33 +1,44 @@
-import SuccessCheckmark from '@/components/SuccessCheckmark';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-//import { verifySecretCode, confirmEmailVerification } from '../api/auth';
-import 'tailwindcss/tailwind.css';
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+import SuccessCheckmark from '@/components/SuccessCheckmark'
+import verifyMail from '@/services/email/verifyMail'
+import 'tailwindcss/tailwind.css'
+import { ApiContext } from '@/types'
 
 const VerifyEmail = () => {
-  const router = useRouter();
-  const [verificationStatus, setVerificationStatus] = useState('');
+  const router = useRouter()
+  const [verificationStatus, setVerificationStatus] = useState('')
 
   useEffect(() => {
     const verifyEmail = async () => {
-      const secretCode = router.query.secret_code;
-      if (!secretCode) return;
+      const secretCode = router.query.secret_code as string
+      const emailId = Number(router.query.email_id )
+    
+      const context: ApiContext = {
+        apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
+      }
+      
 
       try {
-        //await verifySecretCode(secretCode as string);
-        setVerificationStatus('success');
+        console.log('strat')
+        await verifyMail(context, {
+          emailId,
+          secretCode
+        });
+        console.log('end')
+        setVerificationStatus('success')
 
         //await confirmEmailVerification(secretCode as string);
         setTimeout(() => {
-          router.push('/signin');
-        }, 2000);
+          router.push('/signin')
+        }, 2000)
       } catch (error) {
-        setVerificationStatus('failed');
+        setVerificationStatus('failed')
       }
-    };
+    }
 
-    verifyEmail();
-  }, [router]);
+    verifyEmail()
+  }, [router])
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -38,22 +49,22 @@ const VerifyEmail = () => {
         </div>
       )}
     </div>
-  );
+  )
 
-//   return (
-//     <div className="flex justify-center items-center min-h-screen">
-//       {verificationStatus === 'success' && (
-//         <div className="text-green-500 text-lg font-semibold">
-//           認証が完了しました！ログイン画面にリダイレクトします。
-//         </div>
-//       )}
-//       {verificationStatus === 'failed' && (
-//         <div className="text-red-500 text-lg font-semibold">
-//           認証に失敗しました。リンクが無効か期限切れです。
-//         </div>
-//       )}
-//     </div>
-//   );
-};
+  //   return (
+  //     <div className="flex justify-center items-center min-h-screen">
+  //       {verificationStatus === 'success' && (
+  //         <div className="text-green-500 text-lg font-semibold">
+  //           認証が完了しました！ログイン画面にリダイレクトします。
+  //         </div>
+  //       )}
+  //       {verificationStatus === 'failed' && (
+  //         <div className="text-red-500 text-lg font-semibold">
+  //           認証に失敗しました。リンクが無効か期限切れです。
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+}
 
-export default VerifyEmail;
+export default VerifyEmail

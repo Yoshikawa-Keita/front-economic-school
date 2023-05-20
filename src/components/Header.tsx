@@ -1,17 +1,17 @@
 import { Person } from '@mui/icons-material'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
+import Cookies from 'js-cookie'
 import Link from 'next/link'
+import Icon from '../../public/images/userIcon.png'
 import AppLogo from './AppLogo'
 import UserIcon from './UserIcon'
 import { useAuthContext } from '@/contexts/AuthContext'
-
-import Icon from '../../public/images/userIcon.png'
 
 /**
  * ヘッダー
  */
 const Header = () => {
-  const { authUser, isLoading } = useAuthContext()
+  const { authUser } = useAuthContext()
 
   return (
     <header className="p-3 mr-24 flex justify-between">
@@ -34,18 +34,13 @@ const Header = () => {
         {(() => {
           // 認証していたらアイコンを表示
           if (authUser) {
-           
             return (
-               <div className="mt-4 inline-block text-center">
-                 <UserIcon imageUrl={"../../public/images/userIcon.png"} />
-                <p　className="mt-0 mx-auto">{authUser.username}</p>
-               </div>
-                
-            
+              <div className="mt-4 inline-block text-center">
+                {/* <UserIcon imageUrl={"../../public/images/userIcon.png"} /> */}
+                <UserIcon imageUrl={authUser.profile_image_url} />
+                <p className="mt-0 mx-auto">{authUser.username}</p>
+              </div>
             )
-          } else if (isLoading) {
-            // ロード中はスピナーを表示
-            // return <Spinner size={20} strokeWidth={2} />
           } else {
             // サインインしてない場合はアイコンを表示
             return (

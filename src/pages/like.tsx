@@ -5,7 +5,7 @@ const like = () => {
   useAuthGuard()
   return (
   <Layout>
-
+    
   </Layout>
   )
 }

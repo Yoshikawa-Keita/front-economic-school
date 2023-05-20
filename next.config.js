@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['d29xr5gslaixj1.cloudfront.net', 's3.ap-northeast-1.amazonaws.com'],
+  },
   compiler: (() => {
     let compilerConfig = {
       // styledComponentsの有効化

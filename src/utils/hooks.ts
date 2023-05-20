@@ -1,13 +1,12 @@
+import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import Cookies from 'js-cookie'
 
 export const useAuthGuard = (): void => {
   const router = useRouter()
   const { authUser, isLoading } = useAuthContext()
-  const accessToken = Cookies.get("accessToken")
-
+  const accessToken = Cookies.get('accessToken')
 
   useEffect(() => {
     // ユーザーが取得できない場合はサインインページにリダイレクト

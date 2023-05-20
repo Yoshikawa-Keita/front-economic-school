@@ -1,11 +1,11 @@
 // typesは後ほど定義
+import { type } from 'os'
+import Cookies from 'js-cookie'
+import { cookies } from 'next/dist/client/components/headers'
+import { Cookie } from 'next/font/google'
 import { ApiContext, User } from '@/types'
 // 先ほど定義したsrc/utils/index.tsから読み込み
 import { fetcher } from '@/utils'
-import { cookies } from 'next/dist/client/components/headers'
-import Cookies from 'js-cookie';
-import { Cookie } from 'next/font/google'
-import { type } from 'os'
 
 export type SigninParams = {
   /**
@@ -39,7 +39,7 @@ const signin = async (
   context: ApiContext,
   params: SigninParams,
 ): Promise<SigninResponse> => {
-  const response:SigninResponse =  await fetcher(
+  const response: SigninResponse = await fetcher(
     `${context.apiRootUrl.replace(/\/$/g, '')}/v1/login_user`,
     {
       method: 'POST',
@@ -49,13 +49,11 @@ const signin = async (
       },
       body: JSON.stringify(params),
     },
-    
   )
-
-  Cookies.set('accessToken', response.access_token);
-  Cookies.set('user', JSON.stringify(response.user));
-  return response;
-  
+  Cookies.set('accessToken', response.access_token)
+  console.log("asasass", response.user.version)
+  Cookies.set('user', JSON.stringify(response.user))
+  return response
 }
 
 export default signin

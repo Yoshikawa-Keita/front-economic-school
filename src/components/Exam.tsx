@@ -33,8 +33,9 @@ const Exam = ({ university }: ExamProps) => {
       year: 2023,
       questionNum: 1,
       questionPdfUrl:
-        'https://drive.google.com/file/d/1w8DHcX9qBbjQ6hXTFjX1p3cAEJwQq5p1/view?usp=share_link',
-      answerPdfUrl: '/pdfs/2023_answer_1.pdf',
+        'https://transfer-exams.s3.ap-northeast-1.amazonaws.com/kyoto/macro/question/%E4%BA%AC%E5%A4%A7h%EF%BC%93%EF%BC%91%E3%83%BB%E3%83%9E%E3%82%AF%E3%83%AD%EF%BC%92%E6%94%B9.pdf',
+      answerPdfUrl:
+        'https://transfer-exams.s3.ap-northeast-1.amazonaws.com/kyoto/macro/video/%E4%BA%AC%E5%A4%A7h%EF%BC%92%EF%BC%94%E3%83%BB%E3%83%9E%E3%82%AF%E3%83%AD%EF%BC%91%E6%94%B9%E3%83%BB%E8%A7%A3%E8%AA%AC.mp4',
       videoUrl: '',
     },
     {
@@ -45,7 +46,8 @@ const Exam = ({ university }: ExamProps) => {
       questionNum: 2,
       questionPdfUrl:
         'https://drive.google.com/file/d/1w8DHcX9qBbjQ6hXTFjX1p3cAEJwQq5p1/view?usp=share_link',
-      answerPdfUrl: '/pdfs/2023_answer_1.pdf',
+      answerPdfUrl:
+        'https://d29xr5gslaixj1.cloudfront.net/kyoto/macro/video/%E4%BA%AC%E5%A4%A7h%EF%BC%92%EF%BC%94%E3%83%BB%E3%83%9E%E3%82%AF%E3%83%AD%EF%BC%91%E6%94%B9%E3%83%BB%E8%A7%A3%E8%AA%AC.mp4',
       videoUrl: '',
     },
     {

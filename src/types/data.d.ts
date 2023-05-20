@@ -6,11 +6,14 @@ export type Condition = 'new' | 'used'
 // ユーザー
 export type User = {
   username: string
-  fullName: string
+  full_name: string
   email: string
-  userType: number
-  passwordChangedAt: Date
-  createdAt:Date
+  user_type: number
+  profile_image_url: string
+  is_email_verified: boolean
+  password_changed_at: Date
+  created_at: Date
+  version: number
 }
 
 // 商品

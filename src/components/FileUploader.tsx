@@ -1,43 +1,46 @@
-import { useState } from 'react';
-import { fetcher } from '@/utils'; 
-import { useRouter } from 'next/router';
+import { ChangeEvent, FC, useState } from 'react'
 
-const FileUploader = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const router = useRouter();
+interface FileUploaderProps {
+  onFileSelect: (file: FileList) => void
+  message?: string
+  accept?: string
+}
 
-  const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
+const FileUploader: FC<FileUploaderProps> = ({ onFileSelect, message, accept }) => {
+  const [preview, setPreview] = useState<string | null>(null)
+
+  const fileSelectedHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      onFileSelect(event.target.files)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPreview(reader.result as string)
+      }
+      reader.readAsDataURL(event.target.files[0])
     }
-  };
-
-  const fileUploadHandler = async () => {
-    if (!selectedFile) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-
-    try {
-    
-      const response = await fetcher('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      router.push(`/images/${response.imageId}`);
-    } catch (error) {
-      console.error('Upload error:', error);
-    }
-  };
+  }
 
   return (
-    <div>
-      <input type="file" onChange={fileSelectedHandler} />
-      <button onClick={fileUploadHandler}>Upload</button>
+    <div className="flex flex-col items-start">
+      <label
+        htmlFor="profileImage"
+        className="text-sm font-bold text-gray-700 mb-2"
+      >
+        プロフィール画像を選択（任意）
+      </label>
+      <input
+        type="file"
+        id="profileImage"
+        onChange={fileSelectedHandler}
+        accept={accept}
+        className="mb-2"
+      />
+      {preview && (
+        <img src={preview} alt="File preview" className="max-w-xs mb-2" />
+      )}
+      <p className="text-xs text-gray-600">{message}</p>
     </div>
-  );
-};
+  )
+}
 
-export default FileUploader;
+export default FileUploader

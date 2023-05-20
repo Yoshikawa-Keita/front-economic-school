@@ -3,7 +3,7 @@ import { useAuthGuard } from '@/utils/hooks'
 
 const management = () => {
   useAuthGuard()
-  
+
   return (
     <Layout>
       <div className="width-auto">

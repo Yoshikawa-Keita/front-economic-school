@@ -21,8 +21,6 @@ const SigninFormContainer = ({ onSignin }: SigninFormContainerProps) => {
       // ローディングスピナーを表示する
       setGlobalSpinner(true)
       await signin(username, password)
-      
-
 
       onSignin && onSignin()
     } catch (err: unknown) {

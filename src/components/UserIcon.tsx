@@ -1,15 +1,13 @@
+import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 import Icon from '../../public/images/userIcon.png'
 
-import React, { useState } from 'react'
-import signout from '@/services/auth/signout'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/router'
 import { useAuthContext } from '@/contexts/AuthContext'
-
-
+import signout from '@/services/auth/signout'
 
 interface UserIconProps {
   size?: number
@@ -17,7 +15,7 @@ interface UserIconProps {
 }
 
 const UserIcon = ({ size, imageUrl }: UserIconProps) => {
-  const { authUser, isLoading } = useAuthContext()
+  const { authUser } = useAuthContext()
   const [showSubMenu, setShowSubMenu] = useState(false)
 
   const handleClick = () => {
@@ -27,15 +25,16 @@ const UserIcon = ({ size, imageUrl }: UserIconProps) => {
   // サインアウト後のイベントハンドラ
   const handleSignout = async (err?: Error) => {
     if (!err) {
-      await router.push("/signin")
+      await router.push('/signin')
     }
-  } 
-    
+  }
+  console.log("version: ", authUser?.version)
+
   return (
     <div>
-    <div onClick={handleClick}>
+      <div onClick={handleClick}>
         <Image
-          src={Icon}
+          src={`https://s3.ap-northeast-1.amazonaws.com/eco-user-profile/${imageUrl}?${authUser?.version}`}
           width="24"
           height="24"
           className="rounded-full w-12 h-12 border border-blue-400"
@@ -44,19 +43,25 @@ const UserIcon = ({ size, imageUrl }: UserIconProps) => {
       </div>
       {showSubMenu && (
         <div className="absolute bg-white shadow-md py-2 mt-1 rounded">
-          <Link href={`/users/${authUser?.username}`} className="block px-4 py-2 text-black hover:bg-gray-200">
+          <Link
+            href={`/users/${authUser?.username}`}
+            className="block px-4 py-2 text-black hover:bg-gray-200"
+          >
             マイページ
           </Link>
-          <Link href="/settings" className="block px-4 py-2 text-black hover:bg-gray-200">
-            設定
+          <Link
+            href="/settings/profile"
+            className="block px-4 py-2 text-black hover:bg-gray-200"
+          >
+            ユーザー設定
           </Link>
           <hr className="border-gray-300" />
           <button
             className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200"
             onClick={() => {
-             Cookies.remove("user")
-             Cookies.remove("accessToken")
-             router.push("/signin")
+              Cookies.remove('user')
+              Cookies.remove('accessToken')
+              router.push('/signin')
             }}
           >
             ログアウト

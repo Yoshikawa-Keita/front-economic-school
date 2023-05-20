@@ -1,19 +1,14 @@
+import Cookies from 'js-cookie'
 import React, { useContext } from 'react'
 import useSWR from 'swr'
 import signin from '@/services/auth/signin'
 import signout from '@/services/auth/signout'
 import type { ApiContext, User } from '@/types'
-import Cookies from 'js-cookie';
 
 type AuthContextType = {
   authUser?: User
-  isLoading: boolean
   signin: (username: string, password: string) => Promise<void>
   signout: () => Promise<void>
-  mutate: (
-    data?: User | Promise<User>,
-    shouldRevalidate?: boolean,
-  ) => Promise<User | undefined>
 }
 
 type AuthContextProviderProps = {
@@ -23,10 +18,8 @@ type AuthContextProviderProps = {
 
 const AuthContext = React.createContext<AuthContextType>({
   authUser: undefined,
-  isLoading: false,
   signin: async () => Promise.resolve(),
-  signout: async () => Promise.resolve(),
-  mutate: async () => Promise.resolve(undefined),
+  signout: async () => Promise.resolve()
 })
 
 export const useAuthContext = (): AuthContextType =>
@@ -42,39 +35,30 @@ export const AuthContextProvider = ({
   children,
 }: React.PropsWithChildren<AuthContextProviderProps>) => {
   
-  const { data, error, mutate } = useSWR<User>(
-    `${context.apiRootUrl.replace(/\/$/g, '')}/users/me`,
-  )
-  const userData = Cookies.get("user") as string
+  const userData = Cookies.get('user') as string
 
   if (userData !== undefined) {
     authUser = JSON.parse(userData) as User
   }
-  
-  
-
-  const isLoading = !data && !error
 
   // サインイン
   const signinInternal = async (username: string, password: string) => {
     await signin(context, { username, password })
-    await mutate()
+    
   }
 
   // サインアウト
   const signoutInternal = async () => {
     await signout(context)
-    await mutate()
+   
   }
 
   return (
     <AuthContext.Provider
       value={{
-        authUser: data ?? authUser,
-        isLoading,
+        authUser: authUser,
         signin: signinInternal,
-        signout: signoutInternal,
-        mutate,
+        signout: signoutInternal
       }}
     >
       {children}

@@ -13,8 +13,8 @@ interface SignupFormContainerProps {
 }
 
 const context: ApiContext = {
-    apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-  }
+  apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
+}
 
 /**
  * サインアップフォームコンテナ
@@ -22,16 +22,26 @@ const context: ApiContext = {
 const SignupFormContainer = ({ onSignup }: SignupFormContainerProps) => {
   const setGlobalSpinner = useGlobalSpinnerActionsContext()
   // サインアップボタンを押された時のイベントハンドラ
-  const handleSignin = async (username: string, fullName: string, email: string, userType: number, password: string) => {
+  const handleSignin = async (
+    username: string,
+    fullName: string,
+    email: string,
+    userType: number,
+    password: string,
+    profileImage: File | null,
+  ) => {
     try {
       // ローディングスピナーを表示する
       setGlobalSpinner(true)
 
-      console.log("email: " + email + "password: " + password)
-      
-      await signup(context, {username, fullName, email, userType, password})
-      
-
+      await signup(context, {
+        username,
+        fullName,
+        email,
+        userType,
+        password,
+        profileImage,
+      })
 
       onSignup && onSignup()
     } catch (err: unknown) {
