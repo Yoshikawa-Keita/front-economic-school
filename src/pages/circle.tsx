@@ -1,6 +1,9 @@
 import Exam from '@/components/Exam'
 import Layout from '@/components/Layout'
+import { ApiContext } from '@/types'
 import { useAuthGuard } from '@/utils/hooks'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import listExams from '@/services/exam/listExams'
 
 const circle = () => {
   useAuthGuard()
@@ -24,5 +27,7 @@ const circle = () => {
     </Layout>
   )
 }
+
+
 
 export default circle

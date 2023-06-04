@@ -1,0 +1,11 @@
+{
+    "university": {
+        "kyoto": "京都大学",
+        "nagoya": "名古屋大学",
+        "tohoku": "東北大学",
+        "yokohama": "横浜国立大学",
+        "osaka": "大阪大学",
+        "kobe": "神戸大学",
+        "niigata": "新潟大学"
+    }
+}

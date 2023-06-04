@@ -33,3 +33,7 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+const nextTranslate = require('next-translate-plugin')
+
+module.exports = nextTranslate(nextConfig)
