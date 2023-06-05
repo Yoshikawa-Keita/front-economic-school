@@ -29,6 +29,19 @@ export type Product = {
   owner: User
 }
 
+// 過去問
+export type Exam = {
+  examId: number
+  university: string
+  subject: string
+  year: number
+  question_num: number
+  question_pdf_url: string
+  answer_pdf_url: string
+  video_url: string
+  critique_url: string
+}
+
 // APIコンテキスト
 export type ApiContext = {
   apiRootUrl: string
