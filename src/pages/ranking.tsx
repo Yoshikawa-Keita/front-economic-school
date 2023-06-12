@@ -10,6 +10,7 @@ const ranking = () => {
         <h1 className="flex justify-center text-white bg-blue-300 text-4xl m-4">
           ランキング
         </h1>
+        
       </div>
     </Layout>
   )

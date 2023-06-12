@@ -1,14 +1,18 @@
 import { useAuthContext } from '@/contexts/AuthContext'  
-import { ApiContext, Exam, User } from '@/types'
+import { ApiContext, Exam, User, UserExam } from '@/types'
 import getSignedUrl from "@/services/auth/getSignedUrl";
 import { useEffect, useState } from 'react';
+import EditableToggleButton from './EditableToggleButton';
+import ExamToggleButton from './ExamToggleButton';
 
 type ExamYearBlockProps = {
   year: number
   exams: Exam[]
+  completedExams: UserExam[]
+  fetchCompletedExams: () => Promise<void>
 }
 
-const ExamYearBlock: React.FC<ExamYearBlockProps> = ({ year, exams }) => {
+const ExamYearBlock: React.FC<ExamYearBlockProps> = ({ year, exams, completedExams, fetchCompletedExams}) => {
   const { authUser } = useAuthContext()  
   const checkUserType = (userType: number) => {
     return authUser && authUser.user_type === userType
@@ -20,6 +24,9 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({ year, exams }) => {
     };
     const response = await getSignedUrl(context, { file_path: url });
     window.open(response.signed_url, '_blank'); // 新しいタブで署名付きURLを開く
+  }
+  const isExamCompleted = (examId: number) => {
+    return completedExams.some(completedExam => completedExam.exam_id === examId);
   }
 
   const renderLinkForAll =  (url: string, text: string) => {
@@ -80,6 +87,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({ year, exams }) => {
               {renderLinkForAll(`${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/answer/${exam.answer_pdf_url}`, '解答')}
               {renderLinkForAll(`${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/critique/${exam.critique_url}`, '講評')}
               {renderLinkForOne(`${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`, '解説動画')}
+              {authUser && <ExamToggleButton username={authUser.username} examId={exam.exam_id} university={exam.university} initialIsActive={isExamCompleted(exam.exam_id)} fetchCompletedExams={fetchCompletedExams} />}
             </div>
           </div>
         ))}

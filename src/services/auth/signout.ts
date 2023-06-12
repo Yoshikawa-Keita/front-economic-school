@@ -11,6 +11,7 @@ import { fetcher } from '@/utils'
 const signout = (context: ApiContext): void => {
   Cookies.remove('user')
   Cookies.remove('accessToken')
+  Cookies.remove('refresh_token')
 
   // return await fetcher(
   //   `${context.apiRootUrl.replace(/\/$/g, '')}/auth/signout`,

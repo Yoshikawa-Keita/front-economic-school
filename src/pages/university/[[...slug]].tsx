@@ -1,11 +1,14 @@
 import ExamYearBlock from "@/components/ExamYearBlock";
 import Layout from "@/components/Layout";
 import listExams from "@/services/exam/listExams";
-import { ApiContext, Exam } from "@/types";
+import { ApiContext, Exam, UserExam } from "@/types";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useTranslation from 'next-translate/useTranslation'
+import { useAuthContext } from "@/contexts/AuthContext";
+import listCompletedUserExams from '@/services/exam/listCompletedUserExams'
+import { useRouter } from "next/router";
 
 
 type ExamPageProps = {
@@ -23,16 +26,41 @@ const ExamPage: NextPage<ExamPageProps> = ({ exams, initialFlg }) => {
     groups[key].push(exam)
     return groups
   }, {} as Record<number, Exam[]>)
-  // 試験が存在すれば大学名を取得、存在しなければデフォルトの大学名を使用
+  
   const universityName = exams.length > 0 ? exams[0].university : 'Default University';
-
+  
   const universities = useMemo(() => {
     const uniqueUniversities = Array.from(new Set(exams.map((exam) => exam.university)));
     return uniqueUniversities;
   }, [exams]);
 
   const { t } = useTranslation('common')
-  
+
+  const [completedExams, setCompletedExams] = useState<UserExam[]>([]);
+  const { authUser } = useAuthContext()
+  const router = useRouter()
+  const fetchCompletedExams = async () => {
+    if (authUser?.username) {
+      const apiContext: ApiContext = { 
+        apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
+      }
+
+      const params = {
+        username: authUser.username
+        // university: universityName 
+      }
+
+      const response = await listCompletedUserExams(apiContext, params)
+      const userExams = response?.user_exams || []
+      setCompletedExams(userExams)
+      
+    }
+    
+  }
+
+  useEffect(() => {
+    fetchCompletedExams()
+  }, [router.asPath, universityName])
 
   return (
     <Layout>
@@ -42,7 +70,7 @@ const ExamPage: NextPage<ExamPageProps> = ({ exams, initialFlg }) => {
         </h1>
 
         {initialFlg && (
-    <div className="university-nav p-5">
+      <div className="university-nav p-5">
         <h3 className="text-2xl font-bold text-center text-blue-700 mb-5">
             大学一覧
         </h3>
@@ -58,8 +86,6 @@ const ExamPage: NextPage<ExamPageProps> = ({ exams, initialFlg }) => {
     </div>
 )}
 
-
-
          {!initialFlg && (
         <>
         <div className="flex justify-center">
@@ -72,7 +98,7 @@ const ExamPage: NextPage<ExamPageProps> = ({ exams, initialFlg }) => {
           {Object.entries(examsByYear)
             .sort((a, b) => Number(b[0]) - Number(a[0]))
             .map(([year, exams]) => (
-              <ExamYearBlock key={year} year={Number(year)} exams={exams} />
+              <ExamYearBlock key={year} year={Number(year)} exams={exams} completedExams={completedExams}　fetchCompletedExams={fetchCompletedExams} />
             ))}
         </>
       )}
