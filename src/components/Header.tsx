@@ -16,15 +16,14 @@ const Header = () => {
   return (
     <header className="p-3 mr-24 flex justify-between">
       <nav className="h-14 flex items-center ml-8 gap-7 hidden lg:flex">
-          <Link href="/">
-            <AppLogo />
-          </Link>
-          <Link href="/university">過去問データベース</Link>
-          {/* <Link href="/video">動画</Link> */}
-          <Link href="/management">学習管理</Link>
-          <Link href="/ranking">ランキング</Link>
+        <Link href="/">
+          <AppLogo />
+        </Link>
+        <Link href="/university">過去問データベース</Link>
+        {/* <Link href="/video">動画</Link> */}
+        <Link href="/management">学習管理</Link>
+        <Link href="/ranking">ランキング</Link>
       </nav>
-
 
       <nav className="h-14 flex items-center gap-4">
         <Link href="/like">

@@ -2,7 +2,7 @@ import Layout from '@/components/Layout'
 
 import { useAuthGuard } from '@/utils/hooks'
 
-const ranking = () => {
+const Ranking = () => {
   useAuthGuard()
   return (
     <Layout>
@@ -10,10 +10,9 @@ const ranking = () => {
         <h1 className="flex justify-center text-white bg-blue-300 text-4xl m-4">
           ランキング
         </h1>
-        
       </div>
     </Layout>
   )
 }
 
-export default ranking
+export default Ranking

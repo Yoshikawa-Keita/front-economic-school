@@ -6,7 +6,11 @@ interface FileUploaderProps {
   accept?: string
 }
 
-const FileUploader: FC<FileUploaderProps> = ({ onFileSelect, message, accept }) => {
+const FileUploader: FC<FileUploaderProps> = ({
+  onFileSelect,
+  message,
+  accept,
+}) => {
   const [preview, setPreview] = useState<string | null>(null)
 
   const fileSelectedHandler = (event: ChangeEvent<HTMLInputElement>) => {

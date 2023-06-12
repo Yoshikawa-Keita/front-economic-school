@@ -12,18 +12,17 @@ const VerifyEmail = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       const secretCode = router.query.secret_code as string
-      const emailId = Number(router.query.email_id )
-    
+      const emailId = Number(router.query.email_id)
+
       const context: ApiContext = {
         apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
       }
-      
 
       try {
         await verifyMail(context, {
           emailId,
-          secretCode
-        });
+          secretCode,
+        })
         setVerificationStatus('success')
 
         //await confirmEmailVerification(secretCode as string);

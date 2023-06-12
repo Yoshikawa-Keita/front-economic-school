@@ -1,6 +1,6 @@
-import type { ApiContext, Exam } from '@/types'
-import { fetcher } from '@/utils'
 import Cookies from 'js-cookie'
+import type { ApiContext } from '@/types'
+import { fetcher } from '@/utils'
 
 export type ListUniversitiesResponse = {
   universities: string[]
@@ -16,7 +16,7 @@ const listUniversities = async (
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('accessToken')}`
+        Authorization: `Bearer ${Cookies.get('accessToken')}`,
       },
     },
   )

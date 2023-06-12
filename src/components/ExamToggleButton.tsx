@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import upsertUserExam, { UpsertUserExamParams } from '@/services/exam/upsertUserExam'
+import upsertUserExam, {
+  UpsertUserExamParams,
+} from '@/services/exam/upsertUserExam'
 import { ApiContext } from '@/types'
 
 type ExamToggleButtonProps = {
@@ -15,7 +17,7 @@ const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
   examId,
   university,
   initialIsActive,
-  fetchCompletedExams
+  fetchCompletedExams,
 }) => {
   const [isActive, setIsActive] = useState(initialIsActive)
 
@@ -27,7 +29,7 @@ const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
         university: university,
         is_completed: !isActive,
       }
-      
+
       // Assume that ApiContext is available globally, for example through a React Context
       const context: ApiContext = {
         apiRootUrl: process.env.API_BASE_URL || 'http://localhost:8080',

@@ -10,7 +10,7 @@ export const getUserFromCookie = () => {
   return authUser as User
 }
 
-export const convertFileToBase64 = (file: File): Promise<string>  => {
+export const convertFileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onloadend = () => {
