@@ -5,7 +5,7 @@ import Layout from '@/components/Layout'
 import SignupForm from '@/components/SignupForm'
 import SignupFormContainer from '@/containers/SignupFormContainer'
 
-const signup: NextPage = () => {
+const Signup: NextPage = () => {
   const router = useRouter()
   // サインアップ後のイベントハンドラ
   const handleSignup = async (err?: Error) => {
@@ -30,4 +30,4 @@ const signup: NextPage = () => {
   )
 }
 
-export default signup
+export default Signup

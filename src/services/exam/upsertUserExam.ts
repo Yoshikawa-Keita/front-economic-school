@@ -1,6 +1,6 @@
+import Cookies from 'js-cookie'
 import { ApiContext, UserExam } from '@/types'
 import { fetcher } from '@/utils'
-import Cookies from 'js-cookie'
 
 export type UpsertUserExamParams = {
   /**
@@ -35,7 +35,6 @@ const upsertUserExam = async (
   context: ApiContext,
   params: UpsertUserExamParams,
 ): Promise<UpsertUserExamResponse> => {
-
   const response: UpsertUserExamResponse = await fetcher(
     `${context.apiRootUrl.replace(/\/$/g, '')}/v1/upsert_user_exam`,
     {
@@ -43,7 +42,7 @@ const upsertUserExam = async (
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('accessToken')}`
+        Authorization: `Bearer ${Cookies.get('accessToken')}`,
       },
       body: JSON.stringify(params),
     },

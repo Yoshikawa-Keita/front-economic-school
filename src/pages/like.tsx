@@ -1,13 +1,13 @@
 import Layout from '@/components/Layout'
 import { useAuthGuard } from '@/utils/hooks'
 
-const like = () => {
+const Like = () => {
   useAuthGuard()
   return (
-  <Layout>
-    
-  </Layout>
+    <Layout>
+      <div></div>
+    </Layout>
   )
 }
 
-export default like
+export default Like

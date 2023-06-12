@@ -13,20 +13,18 @@ import getAllUsers from '@/services/users/get-all-users'
 import getUser from '@/services/users/get-user'
 import type { ApiContext } from '@/types'
 
-type UserPageProps = InferGetStaticPropsType<typeof getStaticProps>
+type UserPageProps = {
+  username: string
+}
 
-const UserPage: NextPage<UserPageProps> = ({
-  id,
-  user,
-  products,
-}: UserPageProps) => {
+const UserPage: NextPage<UserPageProps> = ({ username }) => {
   const router = useRouter()
 
   if (router.isFallback) {
     return <div>Loading...</div>
   }
 
-  return <Layout>あああ</Layout>
+  return <Layout>{username}</Layout>
 }
 
 //   export const getStaticPaths: GetStaticPaths = async () => {

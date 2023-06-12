@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form'
 import EditableToggleButton from './EditableToggleButton'
 import FileUploader from './FileUploader'
 import { useAuthContext } from '@/contexts/AuthContext'
+import updateUser from '@/services/users/updateUser'
 import { ApiContext, User } from '@/types'
 import { getUserFromCookie } from '@/utils/helper'
-import updateUser from '@/services/users/updateUser'
 
 export type UserProfileData = {
   fullName: string
@@ -50,31 +50,30 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
     const username = authUser.username
 
     try {
+      // ユーザーが画像をアップロードしなかった場合にデフォルトの画像を使用する
+      const finalProfileImage =
+        profileImage && profileImage[0] ? profileImage[0] : null
 
-    // ユーザーが画像をアップロードしなかった場合にデフォルトの画像を使用する
-    const finalProfileImage =
-      profileImage && profileImage[0] ? profileImage[0] : null
-      
-    updateUser(context, {
-      username,
-      fullName,
-      email,
-      profileImage: finalProfileImage
-    })
+      updateUser(context, {
+        username,
+        fullName,
+        email,
+        profileImage: finalProfileImage,
+      })
 
-    // if (profileImage && profileImage[0]) {
-    //   const file = profileImage[0];
-    //   imageUrl = `${username}.${file.name.split('.').pop()}`;
-    // }
+      // if (profileImage && profileImage[0]) {
+      //   const file = profileImage[0];
+      //   imageUrl = `${username}.${file.name.split('.').pop()}`;
+      // }
 
-    onUpdate && onUpdate()
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      // エラーの内容を表示
-      window.alert(err.message)
-      onUpdate && onUpdate(err)
+      onUpdate && onUpdate()
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        // エラーの内容を表示
+        window.alert(err.message)
+        onUpdate && onUpdate(err)
+      }
     }
-  }
   }
 
   return (
@@ -164,9 +163,7 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="profileImage"
-          >
-           
-          </label>
+          ></label>
           <FileUploader
             onFileSelect={(files: FileList) => {
               setValue('profileImage', files)

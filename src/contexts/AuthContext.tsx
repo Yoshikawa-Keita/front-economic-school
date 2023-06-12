@@ -35,19 +35,18 @@ export const AuthContextProvider = ({
   authUser,
   children,
 }: React.PropsWithChildren<AuthContextProviderProps>) => {
-  
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | undefined>(undefined)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const userData = Cookies.get('user') as string;
+    const userData = Cookies.get('user') as string
     if (userData !== undefined) {
-      setUser(JSON.parse(userData) as User);
+      setUser(JSON.parse(userData) as User)
     } else {
-      setUser(undefined);
+      setUser(undefined)
     }
-    setIsLoading(false);
-  }, [Cookies.get('user')]); // クッキーの値が変わるたびに効果を実行する
+    setIsLoading(false)
+  }, [Cookies.get('user')])
 
   // サインイン
   const signinInternal = async (username: string, password: string) => {

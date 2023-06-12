@@ -51,7 +51,7 @@ const signin = async (
     },
   )
   Cookies.set('accessToken', response.access_token)
-  Cookies.set('refreshTtoken', response.refresh_token)
+  Cookies.set('refreshToken', response.refresh_token)
   Cookies.set('user', JSON.stringify(response.user))
   return response
 }

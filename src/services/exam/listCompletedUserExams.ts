@@ -1,12 +1,12 @@
+import Cookies from 'js-cookie'
 import { ApiContext, UserExam } from '@/types'
 import { fetcher } from '@/utils'
-import Cookies from 'js-cookie'
 
 export type ListCompletedUserExamsParams = {
   /**
    * ユーザー名
    */
-  username: string,
+  username: string
   /**
    * 大学名
    */
@@ -27,15 +27,16 @@ const listCompletedUserExams = async (
   context: ApiContext,
   params: ListCompletedUserExamsParams,
 ): Promise<ListCompletedUserExamsResponse> => {
-
   const response: ListCompletedUserExamsResponse = await fetcher(
-    `${context.apiRootUrl.replace(/\/$/g, '')}/v1/list_completed_user_exams/${params.username}`,
+    `${context.apiRootUrl.replace(/\/$/g, '')}/v1/list_completed_user_exams/${
+      params.username
+    }`,
     {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('accessToken')}`
+        Authorization: `Bearer ${Cookies.get('accessToken')}`,
       },
     },
   )
