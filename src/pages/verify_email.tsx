@@ -20,12 +20,10 @@ const VerifyEmail = () => {
       
 
       try {
-        console.log('strat')
         await verifyMail(context, {
           emailId,
           secretCode
         });
-        console.log('end')
         setVerificationStatus('success')
 
         //await confirmEmailVerification(secretCode as string);

@@ -51,9 +51,7 @@ const signin = async (
     },
   )
   Cookies.set('accessToken', response.access_token)
-  console.log("asasass", response.user.user_type)
-  console.log("xxxxxxxxx", response.user.version)
-  console.log("xxxxxxxxx", response.user)
+  Cookies.set('refreshTtoken', response.refresh_token)
   Cookies.set('user', JSON.stringify(response.user))
   return response
 }

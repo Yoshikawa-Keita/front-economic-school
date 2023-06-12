@@ -44,7 +44,6 @@ export type ListExamsParams = {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${Cookies.get('accessToken')}`
         },
-        // body: JSON.stringify(params),
       },
     )
   

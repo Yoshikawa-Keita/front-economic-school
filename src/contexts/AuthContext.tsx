@@ -41,7 +41,6 @@ export const AuthContextProvider = ({
 
   useEffect(() => {
     const userData = Cookies.get('user') as string;
-    console.log("user fetching:", userData)
     if (userData !== undefined) {
       setUser(JSON.parse(userData) as User);
     } else {

@@ -12,7 +12,6 @@ import { useAuthContext } from '@/contexts/AuthContext'
  */
 const Header = () => {
   const { authUser, isLoading } = useAuthContext()
-  console.log("authUser", authUser)
 
   return (
     <header className="p-3 mr-24 flex justify-between">

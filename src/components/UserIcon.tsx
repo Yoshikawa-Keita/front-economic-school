@@ -28,7 +28,6 @@ const UserIcon = ({ size, imageUrl }: UserIconProps) => {
       await router.push('/signin')
     }
   }
-  console.log("version: ", authUser?.version)
 
   return (
     <div>

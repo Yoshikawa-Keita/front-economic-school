@@ -31,7 +31,7 @@ export type Product = {
 
 // 過去問
 export type Exam = {
-  examId: number
+  exam_id: number
   university: string
   subject: string
   year: number
@@ -40,6 +40,19 @@ export type Exam = {
   answer_pdf_url: string
   video_url: string
   critique_url: string
+}
+
+export type UserExam = {
+  username: string
+  exam_id: number
+  university: string
+  is_completed: boolean
+  completed_at: Date
+}
+
+export type ExamCountByUniversity = {
+  university: string
+  count: number
 }
 
 // APIコンテキスト
