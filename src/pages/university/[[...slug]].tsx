@@ -120,7 +120,7 @@ const ExamPage: NextPage<ExamPageProps> = ({ exams, initialFlg }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const context: ApiContext = {
-    apiRootUrl: process.env.API_BASE_URL || 'http://localhost:8080',
+    apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
   }
   const examsRes = await listExams(context, {})
 
@@ -139,7 +139,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const context: ApiContext = {
-    apiRootUrl: process.env.API_BASE_URL || 'http://localhost:8080',
+    apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
   }
 
   const slug = params?.slug || []

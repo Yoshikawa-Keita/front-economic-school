@@ -6,6 +6,7 @@ import Layout from '@/components/Layout'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  console.log('aaaaaaaaa', process.env.NEXT_PUBLIC_API_BASE_URL)
   return (
     <Layout>
       <div className="relative bg-[url('../../public/images/bgimage1.png')]">

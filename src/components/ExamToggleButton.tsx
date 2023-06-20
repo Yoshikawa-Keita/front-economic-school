@@ -32,7 +32,8 @@ const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
 
       // Assume that ApiContext is available globally, for example through a React Context
       const context: ApiContext = {
-        apiRootUrl: process.env.API_BASE_URL || 'http://localhost:8080',
+        apiRootUrl:
+          process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
       }
 
       await upsertUserExam(context, params)

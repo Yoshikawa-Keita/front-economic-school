@@ -25,7 +25,8 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const handleLinkClick = async (url: string, e: React.MouseEvent) => {
     e.preventDefault() // デフォルトのリンク動作をキャンセル
     const context: ApiContext = {
-      apiRootUrl: process.env.API_BASE_URL || 'http://localhost:8080',
+      apiRootUrl:
+        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
     }
     const response = await getSignedUrl(context, { file_path: url })
     window.open(response.signed_url, '_blank') // 新しいタブで署名付きURLを開く
