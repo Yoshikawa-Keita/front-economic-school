@@ -114,14 +114,16 @@ const Ranking: React.FC = () => {
             大学別
           </button>
         </div>
-  
+
         {rankingType === 'university' && (
           <div className="flex justify-center mb-4">
             <select
               onChange={(e) => setUniversity(e.target.value)}
               className="border px-2 py-1"
             >
-               <option value="" disabled selected>{t('university.select')}</option>
+              <option value="" disabled selected>
+                {t('university.select')}
+              </option>
               {univList?.map((univ) => (
                 <option key={univ} value={univ}>
                   {t(`university.${univ}`)}
@@ -132,127 +134,169 @@ const Ranking: React.FC = () => {
         )}
 
         <div className="flex justify-center">
-        <div className="divide-y-2 divide-gray-300 max-w-xl mx-auto">
-        {rankingType === 'global' &&
-      timeSpan === 'total' &&
-      globalRankingData?.rankings?.map((rank, i) => (
-        <div
-          key={rank.ranking}
-          className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'}`}
-        >
-          <div className="flex justify-center border-r-2 border-gray-300">
-          {rank.ranking <= 3 && (
-              <IoMdTrophy
-                size={24}
-                color={rank.ranking === 1 ? 'gold' : rank.ranking === 2 ? 'silver' : rank.ranking === 3 ? '#CD7F32' : 'gray'}
-              />
-            )}
-            <p>{rank.ranking} 位</p>
-          </div>
-          <div className="flex justify-center">
-            <RankingIcon username={rank.username} />
-          </div>
-          <div className="flex justify-center border-r-2 border-gray-300">
-            <h2 className="text-xl w-24 overflow-hidden text-overflow">
-              {rank.username}
-            </h2>
-          </div>
-          <div className="flex justify-center">
-            <p>達成数: {rank.num_completed_exams}</p>
-          </div>
-        </div>
-      ))}
-         {rankingType === 'global' && timeSpan === 'weekly' &&
-  weeklyGlobalRankingData?.rankings?.map((rank, i) => (
-    <div
-      key={rank.ranking}
-      className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'}`}
-    >
-      <div className="flex justify-center border-r-2 border-gray-300">
-        {rank.ranking <= 3 && (
-          <IoMdTrophy
-            size={24}
-            color={rank.ranking === 1 ? 'gold' : rank.ranking === 2 ? 'silver' : rank.ranking === 3 ? '#CD7F32' : 'gray'}
-          />
-        )}
-        <p>{rank.ranking} 位</p>
-      </div>
-      <div className="flex justify-center">
-        <RankingIcon username={rank.username} />
-      </div>
-      <div className="flex justify-center border-r-2 border-gray-300">
-        <h2 className="text-xl w-24 overflow-hidden text-overflow">
-          {rank.username}
-        </h2>
-      </div>
-      <div className="flex justify-center">
-        <p>達成数: {rank.completed_exams_count}</p>
-      </div>
-    </div>
-  ))}
-{rankingType === 'university' && timeSpan === 'total' &&
-  universityRankingData?.rankings
-    ?.filter((rank) => rank.university === university)
-    ?.map((rank, i) => (
-      <div
-        key={rank.ranking}
-        className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'}`}
-      >
-        <div className="flex justify-center border-r-2 border-gray-300">
-          {rank.ranking <= 3 && (
-            <IoMdTrophy
-              size={24}
-              color={rank.ranking === 1 ? 'gold' : rank.ranking === 2 ? 'silver' : rank.ranking === 3 ? '#CD7F32' : 'gray'}
-            />
-          )}
-          <p>{rank.ranking} 位</p>
-        </div>
-        <div className="flex justify-center">
-          <RankingIcon username={rank.username} />
-        </div>
-        <div className="flex justify-center border-r-2 border-gray-300">
-          <h2 className="text-xl w-24 overflow-hidden text-overflow">
-            {rank.username}
-          </h2>
-        </div>
-        <div className="flex justify-center">
-          <p>達成数: {rank.num_completed_exams}</p>
-        </div>
-      </div>
-    ))}
+          <div className="divide-y-2 divide-gray-300 max-w-xl mx-auto">
+            {rankingType === 'global' &&
+              timeSpan === 'total' &&
+              globalRankingData?.rankings?.map((rank, i) => (
+                <div
+                  key={rank.ranking}
+                  className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${
+                    i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'
+                  }`}
+                >
+                  <div className="flex justify-center border-r-2 border-gray-300">
+                    {rank.ranking <= 3 && (
+                      <IoMdTrophy
+                        size={24}
+                        color={
+                          rank.ranking === 1
+                            ? 'gold'
+                            : rank.ranking === 2
+                            ? 'silver'
+                            : rank.ranking === 3
+                            ? '#CD7F32'
+                            : 'gray'
+                        }
+                      />
+                    )}
+                    <p>{rank.ranking} 位</p>
+                  </div>
+                  <div className="flex justify-center">
+                    <RankingIcon username={rank.username} />
+                  </div>
+                  <div className="flex justify-center border-r-2 border-gray-300">
+                    <h2 className="text-xl w-24 overflow-hidden text-overflow">
+                      {rank.username}
+                    </h2>
+                  </div>
+                  <div className="flex justify-center">
+                    <p>達成数: {rank.num_completed_exams}</p>
+                  </div>
+                </div>
+              ))}
+            {rankingType === 'global' &&
+              timeSpan === 'weekly' &&
+              weeklyGlobalRankingData?.rankings?.map((rank, i) => (
+                <div
+                  key={rank.ranking}
+                  className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${
+                    i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'
+                  }`}
+                >
+                  <div className="flex justify-center border-r-2 border-gray-300">
+                    {rank.ranking <= 3 && (
+                      <IoMdTrophy
+                        size={24}
+                        color={
+                          rank.ranking === 1
+                            ? 'gold'
+                            : rank.ranking === 2
+                            ? 'silver'
+                            : rank.ranking === 3
+                            ? '#CD7F32'
+                            : 'gray'
+                        }
+                      />
+                    )}
+                    <p>{rank.ranking} 位</p>
+                  </div>
+                  <div className="flex justify-center">
+                    <RankingIcon username={rank.username} />
+                  </div>
+                  <div className="flex justify-center border-r-2 border-gray-300">
+                    <h2 className="text-xl w-24 overflow-hidden text-overflow">
+                      {rank.username}
+                    </h2>
+                  </div>
+                  <div className="flex justify-center">
+                    <p>達成数: {rank.completed_exams_count}</p>
+                  </div>
+                </div>
+              ))}
+            {rankingType === 'university' &&
+              timeSpan === 'total' &&
+              universityRankingData?.rankings
+                ?.filter((rank) => rank.university === university)
+                ?.map((rank, i) => (
+                  <div
+                    key={rank.ranking}
+                    className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${
+                      i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'
+                    }`}
+                  >
+                    <div className="flex justify-center border-r-2 border-gray-300">
+                      {rank.ranking <= 3 && (
+                        <IoMdTrophy
+                          size={24}
+                          color={
+                            rank.ranking === 1
+                              ? 'gold'
+                              : rank.ranking === 2
+                              ? 'silver'
+                              : rank.ranking === 3
+                              ? '#CD7F32'
+                              : 'gray'
+                          }
+                        />
+                      )}
+                      <p>{rank.ranking} 位</p>
+                    </div>
+                    <div className="flex justify-center">
+                      <RankingIcon username={rank.username} />
+                    </div>
+                    <div className="flex justify-center border-r-2 border-gray-300">
+                      <h2 className="text-xl w-24 overflow-hidden text-overflow">
+                        {rank.username}
+                      </h2>
+                    </div>
+                    <div className="flex justify-center">
+                      <p>達成数: {rank.num_completed_exams}</p>
+                    </div>
+                  </div>
+                ))}
 
-{rankingType === 'university' && timeSpan === 'weekly' &&
-  weeklyUniversityRankingData?.rankings
-    ?.filter((rank) => rank.university === university)
-    ?.map((rank, i) => (
-      <div
-        key={rank.ranking}
-        className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'}`}
-      >
-        <div className="flex justify-center border-r-2 border-gray-300">
-          {rank.ranking <= 3 && (
-            <IoMdTrophy
-              size={24}
-              color={rank.ranking === 1 ? 'gold' : rank.ranking === 2 ? 'silver' : rank.ranking === 3 ? '#CD7F32' : 'gray'}
-            />
-          )}
-          <p>{rank.ranking} 位</p>
-        </div>
-        <div className="flex justify-center">
-          <RankingIcon username={rank.username} />
-        </div>
-        <div className="flex justify-center border-r-2 border-gray-300">
-          <h2 className="text-xl w-24 overflow-hidden text-overflow">
-            {rank.username}
-          </h2>
-        </div>
-        <div className="flex justify-center">
-          <p>達成数: {rank.completed_exams_count}</p>
-        </div>
-      </div>
-    ))}
-
-        </div>
+            {rankingType === 'university' &&
+              timeSpan === 'weekly' &&
+              weeklyUniversityRankingData?.rankings
+                ?.filter((rank) => rank.university === university)
+                ?.map((rank, i) => (
+                  <div
+                    key={rank.ranking}
+                    className={`p-4 grid grid-cols-4 gap-4 items-center justify-center border-2 border-gray-300 rounded-md my-2 ${
+                      i % 2 === 0 ? 'bg-white-200' : 'bg-gray-100'
+                    }`}
+                  >
+                    <div className="flex justify-center border-r-2 border-gray-300">
+                      {rank.ranking <= 3 && (
+                        <IoMdTrophy
+                          size={24}
+                          color={
+                            rank.ranking === 1
+                              ? 'gold'
+                              : rank.ranking === 2
+                              ? 'silver'
+                              : rank.ranking === 3
+                              ? '#CD7F32'
+                              : 'gray'
+                          }
+                        />
+                      )}
+                      <p>{rank.ranking} 位</p>
+                    </div>
+                    <div className="flex justify-center">
+                      <RankingIcon username={rank.username} />
+                    </div>
+                    <div className="flex justify-center border-r-2 border-gray-300">
+                      <h2 className="text-xl w-24 overflow-hidden text-overflow">
+                        {rank.username}
+                      </h2>
+                    </div>
+                    <div className="flex justify-center">
+                      <p>達成数: {rank.completed_exams_count}</p>
+                    </div>
+                  </div>
+                ))}
+          </div>
         </div>
       </div>
     </Layout>
