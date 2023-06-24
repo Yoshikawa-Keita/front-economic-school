@@ -55,6 +55,40 @@ export type ExamCountByUniversity = {
   count: number
 }
 
+export type GlobalRanking = {
+  username: string
+  num_completed_exams: number
+  ranking: number
+  ranking_date: string
+  created_at: string
+}
+
+export type UniversityRanking = {
+  username: string
+  university: string
+  num_completed_exams: number
+  ranking: number
+  ranking_date: string
+  created_at: string
+}
+
+export type WeeklyGlobalRanking = {
+  username: string
+  completed_exams_count: number
+  ranking: number
+  ranking_date: string
+  created_at: string
+}
+
+export type WeeklyUniversityRanking = {
+  username: string
+  university: string
+  completed_exams_count: number
+  ranking: number
+  ranking_date: string
+  created_at: string
+}
+
 // APIコンテキスト
 export type ApiContext = {
   apiRootUrl: string

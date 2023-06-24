@@ -26,9 +26,9 @@ const Header = () => {
       </nav>
 
       <nav className="h-14 flex items-center gap-4">
-        <Link href="/like">
+        {/* <Link href="/like">
           <StarBorderIcon />
-        </Link>
+        </Link> */}
         {(() => {
           // 認証していたらアイコンを表示
           if (authUser) {
