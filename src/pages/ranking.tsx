@@ -36,6 +36,7 @@ const Ranking: React.FC = () => {
   const [weeklyUniversityRankingData, setWeeklyUniversityRankingData] =
     useState<GetWeeklyUniversityRankingResponse>({ rankings: [] })
 
+  // const [page, setPage] = useState<number>(1);
   const [univList, setUnivList] = useState<string[]>()
   const { t } = useTranslation('common')
 
@@ -63,6 +64,9 @@ const Ranking: React.FC = () => {
 
     fetchData()
   }, [timeSpan, rankingType, university])
+  useEffect(() => {
+    setUniversity(''); // Reset university selection when timeSpan or rankingType changes
+  }, [timeSpan, rankingType]);
 
   return (
     <Layout>
@@ -173,7 +177,11 @@ const Ranking: React.FC = () => {
                     <p>達成数: {rank.num_completed_exams}</p>
                   </div>
                 </div>
-              ))}
+                
+              )
+              
+              
+              )}
             {rankingType === 'global' &&
               timeSpan === 'weekly' &&
               weeklyGlobalRankingData?.rankings?.map((rank, i) => (
@@ -297,7 +305,30 @@ const Ranking: React.FC = () => {
                   </div>
                 ))}
           </div>
+          
         </div>
+        {/* <div className="flex justify-center">
+  <button
+    onClick={() => setPage(page > 1 ? page - 1 : page)}
+    className="px-4 py-2 mx-2 bg-white text-black"
+    disabled={page <= 1}
+  >
+    prev
+  </button>
+  <div className="px-4 py-2 mx-2 text-black">
+    Page: {page}
+  </div>
+  <button
+    onClick={() => setPage(page + 1)}
+    className="px-4 py-2 mx-2 bg-white text-black"
+    // disabled={page >= totalPage}
+  >
+    next
+  </button>
+</div> */}
+
+        
+      
       </div>
     </Layout>
   )

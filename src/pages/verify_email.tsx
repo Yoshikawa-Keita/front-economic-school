@@ -48,20 +48,6 @@ const VerifyEmail = () => {
     </div>
   )
 
-  //   return (
-  //     <div className="flex justify-center items-center min-h-screen">
-  //       {verificationStatus === 'success' && (
-  //         <div className="text-green-500 text-lg font-semibold">
-  //           認証が完了しました！ログイン画面にリダイレクトします。
-  //         </div>
-  //       )}
-  //       {verificationStatus === 'failed' && (
-  //         <div className="text-red-500 text-lg font-semibold">
-  //           認証に失敗しました。リンクが無効か期限切れです。
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
 }
 
 export default VerifyEmail

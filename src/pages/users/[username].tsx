@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 
 import getAllUsers from '@/services/users/get-all-users'
-import getUser from '@/services/users/get-user'
+import getUser from '@/services/users/getUserByUsername'
 import type { ApiContext } from '@/types'
 
 type UserPageProps = {
