@@ -15,7 +15,7 @@ const sendPassWordResetEmail = async (
   context: ApiContext,
   params: SendPassWordResetEmailParam,
 ): Promise<void> => {
-   await fetcher(
+  await fetcher(
     `${context.apiRootUrl.replace(/\/$/g, '')}/v1/send_password_reset_email`,
     {
       method: 'POST',
@@ -27,7 +27,6 @@ const sendPassWordResetEmail = async (
       body: JSON.stringify(params),
     },
   )
-
 }
 
 export default sendPassWordResetEmail

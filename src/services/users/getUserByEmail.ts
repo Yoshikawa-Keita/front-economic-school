@@ -2,7 +2,7 @@ import type { ApiContext, User } from '@/types'
 import { fetcher } from '@/utils'
 
 export type GetUserByEmailParam = {
-  email: string,
+  email: string
 }
 
 /**
@@ -15,7 +15,6 @@ const getUserByEmail = async (
   context: ApiContext,
   { email }: GetUserByEmailParam,
 ): Promise<User> => {
-
   return await fetcher(
     `${context.apiRootUrl.replace(/\/$/g, '')}/v1/get_user_by_email/${email}`,
     {

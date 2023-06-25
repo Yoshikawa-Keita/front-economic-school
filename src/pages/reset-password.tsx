@@ -13,26 +13,30 @@ interface FormInput {
 }
 
 const ResetPassword: NextPage = () => {
-    const router = useRouter()
-  const { register, handleSubmit, formState: { errors } } = useForm<FormInput>()
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInput>()
 
   const onSubmit = async (data: FormInput) => {
     try {
       const apiContext: ApiContext = {
         apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
       }
-      const user = await getUserByEmail(apiContext, { email: data.email });
+      const user = await getUserByEmail(apiContext, { email: data.email })
       // パスワードリセットメール送信処理をここで行う
-      await sendPasswordResetEmail(apiContext, {email: data.email})
-      
-      toast.success('パスワードリセットメールを送信しました。');
+      await sendPasswordResetEmail(apiContext, { email: data.email })
+
+      toast.success('パスワードリセットメールを送信しました。')
       router.push('/password-reset-confirmation')
     } catch (error) {
-        console.log('エラーオブジェクト:', error);
+      console.log('エラーオブジェクト:', error)
       if (error.message === 'user not found') {
-        toast.error('入力されたメールアドレスが存在しません。');
+        toast.error('入力されたメールアドレスが存在しません。')
       } else {
-        toast.error('エラーが発生しました。再度試してみてください。');
+        toast.error('エラーが発生しました。再度試してみてください。')
       }
     }
   }
@@ -42,7 +46,7 @@ const ResetPassword: NextPage = () => {
       <div className="pt-2 pb-2 px-2 md:px-0 justify-center flex">
         <div className="w-400px flex flex-col justify-center items-center">
           <div className="mb-2">
-           <h1>パスワード再設定</h1>
+            <h1>パスワード再設定</h1>
           </div>
           <div className="w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,9 +59,14 @@ const ResetPassword: NextPage = () => {
                 }`}
               />
               {errors.email && (
-                <p className="text-xs text-red-500 pl-1">メールアドレスは必須です</p>
+                <p className="text-xs text-red-500 pl-1">
+                  メールアドレスは必須です
+                </p>
               )}
-              <button type="submit" className="p-2 border rounded mb-2 w-full bg-blue-500 text-white">
+              <button
+                type="submit"
+                className="p-2 border rounded mb-2 w-full bg-blue-500 text-white"
+              >
                 パスワード再設定メールを送信
               </button>
             </form>

@@ -10,11 +10,10 @@ export type PasswordResetMailMailParam = {
    * Secret Code
    */
   secretCode: string
-   /**
+  /**
    * password
    */
   password: string
-  
 }
 
 type PasswordResetMailResponse = {

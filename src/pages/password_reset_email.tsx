@@ -13,9 +13,14 @@ interface FormInput {
 
 const PasswordReset = () => {
   const router = useRouter()
-  const { register, handleSubmit, formState: { errors }, watch } = useForm<FormInput>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FormInput>()
   const password = useRef({})
-  password.current = watch('password', '');
+  password.current = watch('password', '')
 
   const [resetStatus, setResetStatus] = useState('')
 
@@ -50,32 +55,58 @@ const PasswordReset = () => {
       {resetStatus === '' && (
         <div className="bg-white p-8 rounded shadow-md w-full sm:w-1/2 lg:w-1/3">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <p className="text-sm text-gray-700">新しいパスワードを入力してください：</p>
+            <p className="text-sm text-gray-700">
+              新しいパスワードを入力してください：
+            </p>
             <input
               {...register('password', { required: true })}
               type="password"
               placeholder="新しいパスワード"
-              className={`w-full p-2 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full p-2 border rounded ${
+                errors.password ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
-            {errors.password && <p className="text-red-500 text-xs">パスワードは必須です</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs">パスワードは必須です</p>
+            )}
 
-            <p className="text-sm text-gray-700">パスワードを再度入力してください：</p>
+            <p className="text-sm text-gray-700">
+              パスワードを再度入力してください：
+            </p>
             <input
-              {...register('passwordConfirmation', { required: true, validate: value => value === password.current || "パスワードが一致していません" })}
+              {...register('passwordConfirmation', {
+                required: true,
+                validate: (value) =>
+                  value === password.current || 'パスワードが一致していません',
+              })}
               type="password"
               placeholder="パスワード（確認）"
-              className={`w-full p-2 border rounded ${errors.passwordConfirmation ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full p-2 border rounded ${
+                errors.passwordConfirmation
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              }`}
             />
-            {errors.passwordConfirmation && <p className="text-red-500 text-xs">{errors.passwordConfirmation.message}</p>}
+            {errors.passwordConfirmation && (
+              <p className="text-red-500 text-xs">
+                {errors.passwordConfirmation.message}
+              </p>
+            )}
 
-            <button type="submit" className="w-full p-2 border rounded bg-blue-500 text-white">パスワードをリセットする</button>
+            <button
+              type="submit"
+              className="w-full p-2 border rounded bg-blue-500 text-white"
+            >
+              パスワードをリセットする
+            </button>
           </form>
         </div>
       )}
       {resetStatus === 'success' && <SuccessCheckmark />}
       {resetStatus === 'failed' && (
         <div className="text-red-500 text-lg font-semibold">
-          パスワードのリセットに失敗しました。リンクが無効か期限切れかもしれません。<br/>
+          パスワードのリセットに失敗しました。リンクが無効か期限切れかもしれません。
+          <br />
           再度サインアップ画面から再設定を行ってください。
         </div>
       )}

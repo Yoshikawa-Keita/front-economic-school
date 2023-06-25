@@ -40,7 +40,6 @@ const Signin: NextPage = () => {
             <div className="mt-2">
               <Link href="/reset-password">パスワードを再設定する</Link>
             </div>
-            
           </div>
         </div>
       </div>

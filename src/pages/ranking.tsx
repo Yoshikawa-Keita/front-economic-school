@@ -65,8 +65,8 @@ const Ranking: React.FC = () => {
     fetchData()
   }, [timeSpan, rankingType, university])
   useEffect(() => {
-    setUniversity(''); // Reset university selection when timeSpan or rankingType changes
-  }, [timeSpan, rankingType]);
+    setUniversity('') // Reset university selection when timeSpan or rankingType changes
+  }, [timeSpan, rankingType])
 
   return (
     <Layout>
@@ -177,11 +177,7 @@ const Ranking: React.FC = () => {
                     <p>達成数: {rank.num_completed_exams}</p>
                   </div>
                 </div>
-                
-              )
-              
-              
-              )}
+              ))}
             {rankingType === 'global' &&
               timeSpan === 'weekly' &&
               weeklyGlobalRankingData?.rankings?.map((rank, i) => (
@@ -305,7 +301,6 @@ const Ranking: React.FC = () => {
                   </div>
                 ))}
           </div>
-          
         </div>
         {/* <div className="flex justify-center">
   <button
@@ -326,9 +321,6 @@ const Ranking: React.FC = () => {
     next
   </button>
 </div> */}
-
-        
-      
       </div>
     </Layout>
   )
