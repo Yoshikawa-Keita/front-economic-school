@@ -11,20 +11,16 @@ export type UpdateUserParams = {
   /**
    * フルネーム
    */
-  fullName: string
+  fullName?: string
   /**
    * メールアドレス
    */
-  email: string
-  // /**
-  //  * パスワード
-  //  */
-  // password: string
+  email?: string
 
   /**
    * ユーザープロフィール
    */
-  profileImage: File | null
+  profileImage?: File | null
 }
 
 type UpdateUserResponse = {

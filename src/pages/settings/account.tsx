@@ -7,8 +7,9 @@ import updateUser from '@/services/users/updateUser'
 import { User } from '@/types'
 import { getUserFromCookie } from '@/utils/helper'
 import UserSettingHeader from '@/components/UserSettingHeader'
+import UserAccount from '@/components/UserAccount'
 
-const Profile: NextPage = () => {
+const Account: NextPage = () => {
   const router = useRouter()
   const authUser = getUserFromCookie()
 
@@ -22,10 +23,10 @@ const Profile: NextPage = () => {
     <Layout>
       <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 pt-4">
         <UserSettingHeader />
-        <UserProfile authUser={authUser} onUpdate={onUpdate}></UserProfile>
+        <UserAccount authUser={authUser} onUpdate={onUpdate}></UserAccount>
       </div>
     </Layout>
   )
 }
 
-export default Profile
+export default Account
