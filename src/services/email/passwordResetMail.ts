@@ -1,7 +1,7 @@
 import { ApiContext } from '@/types'
 import { fetcher } from '@/utils'
 
-export type VerifyMailParams = {
+export type PasswordResetMailMailParam = {
   /**
    * Email ID
    */
@@ -10,9 +10,13 @@ export type VerifyMailParams = {
    * Secret Code
    */
   secretCode: string
+  /**
+   * password
+   */
+  password: string
 }
 
-type VerifyMailResponse = {
+type PasswordResetMailResponse = {
   // レスポンスを更新します
   isVerified: boolean
 }
@@ -23,22 +27,22 @@ type VerifyMailResponse = {
  * @param params パラメータ
  * @returns メールが確認されたかどうか
  */
-const verifyMail = async (
+const passwordResetMail = async (
   context: ApiContext,
-  params: VerifyMailParams,
-): Promise<VerifyMailResponse> => {
-  const response: VerifyMailResponse = await fetcher(
-    `${context.apiRootUrl.replace(/\/$/g, '')}/v1/verify_email`,
+  param: PasswordResetMailMailParam,
+): Promise<PasswordResetMailResponse> => {
+  const response: PasswordResetMailResponse = await fetcher(
+    `${context.apiRootUrl.replace(/\/$/g, '')}/v1/password_reset_email`,
     {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify(param),
     },
   )
   return response
 }
 
-export default verifyMail
+export default passwordResetMail

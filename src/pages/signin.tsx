@@ -34,7 +34,12 @@ const Signin: NextPage = () => {
       */}
 
             <SigninFormContainer onSignin={handleSignin} />
-            <Link href="/signup">新規登録はこちらから</Link>
+            <div className="mt-2">
+              <Link href="/signup">新規登録はこちらから</Link>
+            </div>
+            <div className="mt-2">
+              <Link href="/reset-password">パスワードを再設定する</Link>
+            </div>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import GlobalSpinner from '@/components/GlobalSpinner'
 import { AuthContextProvider } from '@/contexts/AuthContext'
 import GlobalSpinnerContextProvider from '@/contexts/GlobalSpinnerContext'
 import '@/styles/globals.css'
+import { ToastContainer } from 'react-toastify'
 import { ApiContext } from '@/types'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -46,6 +47,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <AuthContextProvider context={context}>
             <GlobalSpinner />
             <Component {...pageProps} />
+            <ToastContainer />
           </AuthContextProvider>
         </GlobalSpinnerContextProvider>
       </SWRConfig>
