@@ -31,7 +31,7 @@ const ResetPassword: NextPage = () => {
 
       toast.success('パスワードリセットメールを送信しました。')
       router.push('/password-reset-confirmation')
-    } catch (error) {
+    } catch (error: any) {
       console.log('エラーオブジェクト:', error)
       if (error.message === 'user not found') {
         toast.error('入力されたメールアドレスが存在しません。')
