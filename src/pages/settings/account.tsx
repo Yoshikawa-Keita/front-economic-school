@@ -12,7 +12,7 @@ const Account: NextPage = () => {
 
   const onUpdate = async (err?: Error) => {
     if (!err) {
-        toast.success('認証メールを送信しました', { autoClose: false });
+      toast.success('認証メールを送信しました', { autoClose: false })
       await router.push('/')
     }
   }
