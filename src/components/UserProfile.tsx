@@ -24,10 +24,7 @@ const context: ApiContext = {
 }
 
 const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
-  //const { authUser, isLoading } = useAuthContext()
   const [isEmailEditable, setEmailEditable] = useState(false)
-  //const [isPasswordEditable, setPasswordEditable] = useState(false)
-  //const authUser = getUserFromCookie()
   const {
     register,
     handleSubmit,
@@ -61,11 +58,6 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
         profileImage: finalProfileImage,
       })
 
-      // if (profileImage && profileImage[0]) {
-      //   const file = profileImage[0];
-      //   imageUrl = `${username}.${file.name.split('.').pop()}`;
-      // }
-
       onUpdate && onUpdate()
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -77,7 +69,7 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-2">
+    <div className="flex flex-col items-center justify-start bg-gray-100 py-2">
       <h1 className="text-2xl font-bold mb-5">プロフィール編集</h1>
       <p className="mb-2">ユーザー名: {authUser?.username}</p>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
@@ -101,64 +93,7 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
             <p className="text-red-500 text-xs italic">フルネームは必須です</p>
           )}
         </div>
-        {/* <div className="mb-4">
-          <EditableToggleButton
-            isActive={isEmailEditable}
-            onToggle={() => setEmailEditable(isEmailEditable =>　!isEmailEditable)}
-            id="email-toggle"
-          />
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email"
-          >
-            メールアドレス:
-          </label>
-          <input
-            {...register('email', { required: true })}
-            name="email"
-            type="email"
-            placeholder="メールアドレス"
-            disabled={!isEmailEditable}
-            className={`shadow appearance-none border ${
-              errors.email ? 'border-red-500' : 'border-gray-200'
-            } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-xs italic">
-              メールアドレスは必須です
-            </p>
-          )}
-        </div> */}
-        {/* <div className="mb-4">
-          <EditableToggleButton
-            isActive={isPasswordEditable}
-            onToggle={() => setPasswordEditable(isPasswordEditable =>　!isPasswordEditable)}
-            id="password-toggle"
-          />
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password"
-          >
-            パスワード:
-          </label>
-          <input
-            {...register('password', { required: true, minLength: 6 })}
-            name="password"
-            type="password"
-            placeholder="パスワードを変更する場合に入力"
-            disabled={!isPasswordEditable}
-            className={`shadow appearance-none border ${
-              errors.password ? 'border-red-500' : 'border-gray-200'
-            } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-xs italic">
-              {errors.password.type === 'required'
-                ? 'パスワードは必須です'
-                : 'パスワードは6文字以上で入力してください'}
-            </p>
-          )}
-        </div> */}
+
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"

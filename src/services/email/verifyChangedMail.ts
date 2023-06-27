@@ -2,34 +2,33 @@ import { ApiContext } from '@/types'
 import { fetcher } from '@/utils'
 import Cookies from 'js-cookie'
 
-export type VerifyMailParams = {
+export type VerifychangedMailParams = {
   /**
-   * Email ID
+   * username
    */
-  emailId: number
+  username: string
   /**
-   * Secret Code
+   * changed email
    */
-  secretCode: string
+  email: string
 }
 
-type VerifyMailResponse = {
-  // レスポンスを更新します
+type VerifyNewMailResponse = {
   isVerified: boolean
 }
 
 /**
- * メール確認API
+ * メールアドレス変更確認API
  * @param context APIコンテキスト
  * @param params パラメータ
- * @returns メールが確認されたかどうか
+ * @returns メールが認証されたかどうか
  */
-const verifyMail = async (
+const verifyChangedMail = async (
   context: ApiContext,
-  params: VerifyMailParams,
-): Promise<VerifyMailResponse> => {
-  const response: VerifyMailResponse = await fetcher(
-    `${context.apiRootUrl.replace(/\/$/g, '')}/v1/verify_email`,
+  params: VerifychangedMailParams,
+): Promise<VerifyNewMailResponse> => {
+  const response: VerifyNewMailResponse = await fetcher(
+    `${context.apiRootUrl.replace(/\/$/g, '')}/v1/verify_changed_email`,
     {
       method: 'POST',
       headers: {
@@ -43,4 +42,4 @@ const verifyMail = async (
   return response
 }
 
-export default verifyMail
+export default verifyChangedMail
