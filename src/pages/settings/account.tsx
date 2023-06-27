@@ -1,13 +1,10 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
-import UserProfile from '@/components/UserProfile'
-import updateUser from '@/services/users/updateUser'
-import { User } from '@/types'
 import { getUserFromCookie } from '@/utils/helper'
 import UserSettingHeader from '@/components/UserSettingHeader'
 import UserAccount from '@/components/UserAccount'
+import { toast } from 'react-toastify'
 
 const Account: NextPage = () => {
   const router = useRouter()
@@ -15,6 +12,7 @@ const Account: NextPage = () => {
 
   const onUpdate = async (err?: Error) => {
     if (!err) {
+        toast.success('認証メールを送信しました', { autoClose: false });
       await router.push('/')
     }
   }
