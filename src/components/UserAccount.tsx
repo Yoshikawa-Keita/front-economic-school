@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import EditableToggleButton from './EditableToggleButton'
 import { ApiContext, User } from '@/types'
-import updateUser from '@/services/users/updateUser'
+import updateUserEmail from '@/services/users/updateUserEmail'
+import ConfirmModal from '@/components/ConfirmModal'
+import { toast } from 'react-toastify'
 
 export type UserAccountData = {
   email: string
@@ -19,6 +21,9 @@ const context: ApiContext = {
 
 const UserAccount = ({ authUser, onUpdate }: UserAccountProps) => {
   const [isEmailEditable, setEmailEditable] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const newData = useRef<UserAccountData | null>(null)
+
   const {
     register,
     handleSubmit,
@@ -30,23 +35,37 @@ const UserAccount = ({ authUser, onUpdate }: UserAccountProps) => {
   })
 
   const onSubmit = (data: UserAccountData) => {
-    const { email } = data
+    newData.current = data
+    setShowModal(true)
+  }
+
+  const confirmUpdate = () => {
+    if (!newData.current) return
+
+    const { email } = newData.current
     const username = authUser.username
 
-    try {
-      updateUser(context, {
-        username,
-        email,
+    updateUserEmail(context, {
+      username,
+      email,
+    })
+      .then(() => {
+        // On success
+        onUpdate && onUpdate()
+      })
+      .catch((err: unknown) => {
+        // On error
+        if (err instanceof Error) {
+          if (err.message === 'email already registered') {
+            toast.error('このメールアドレスは既に登録されています')
+          } else {
+            toast.error(err.message)
+          }
+          onUpdate && onUpdate(err)
+        }
       })
 
-      onUpdate && onUpdate()
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        // エラーの内容を表示
-        window.alert(err.message)
-        onUpdate && onUpdate(err)
-      }
-    }
+    setShowModal(false)
   }
 
   return (
@@ -87,12 +106,24 @@ const UserAccount = ({ authUser, onUpdate }: UserAccountProps) => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            disabled={!isEmailEditable}
+            className={`${
+              isEmailEditable
+                ? 'bg-blue-500 hover:bg-blue-700'
+                : 'bg-gray-500 cursor-not-allowed'
+            } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
           >
             更新する
           </button>
         </div>
       </form>
+      <ConfirmModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={confirmUpdate}
+        title="更新確認"
+        body="アカウント情報を更新してもよろしいですか？"
+      />
     </div>
   )
 }
