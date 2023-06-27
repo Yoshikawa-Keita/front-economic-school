@@ -30,7 +30,7 @@ const verifyChangedMail = async (
   const response: VerifyNewMailResponse = await fetcher(
     `${context.apiRootUrl.replace(/\/$/g, '')}/v1/verify_changed_email`,
     {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
