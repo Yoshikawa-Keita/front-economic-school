@@ -32,7 +32,6 @@ const ResetPassword: NextPage = () => {
       toast.success('パスワードリセットメールを送信しました。')
       router.push('/password-reset-confirmation')
     } catch (error: any) {
-      console.log('エラーオブジェクト:', error)
       if (error.message === 'user not found') {
         toast.error('入力されたメールアドレスが存在しません。')
       } else {
@@ -45,9 +44,10 @@ const ResetPassword: NextPage = () => {
     <Layout>
       <div className="pt-2 pb-2 px-2 md:px-0 justify-center flex">
         <div className="w-400px flex flex-col justify-center items-center">
-          <div className="mb-2">
-            <h1>パスワード再設定</h1>
+          <div className="mb-4">
+            <h1 className="text-2xl font-bold text-center">パスワード再設定</h1>
           </div>
+
           <div className="w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
               <input
@@ -70,7 +70,13 @@ const ResetPassword: NextPage = () => {
                 パスワード再設定メールを送信
               </button>
             </form>
-            <Link href="/signin">サインイン画面に戻る</Link>
+            <div className="mt-4">
+              <Link href="/signin">
+                <p className="text-blue-500 hover:underline cursor-pointer">
+                  サインイン画面に戻る
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -50,7 +50,6 @@ const signin = async (
       body: JSON.stringify(params),
     },
   )
-  console.log('aaaaaaaaa:', context.apiRootUrl)
   Cookies.set('accessToken', response.access_token)
   Cookies.set('refreshToken', response.refresh_token)
   Cookies.set('user', JSON.stringify(response.user))

@@ -1,6 +1,7 @@
 import SigninForm from '@/components/SigninForm'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useGlobalSpinnerActionsContext } from '@/contexts/GlobalSpinnerContext'
+import { toast } from 'react-toastify'
 
 interface SigninFormContainerProps {
   /**
@@ -25,8 +26,16 @@ const SigninFormContainer = ({ onSignin }: SigninFormContainerProps) => {
       onSignin && onSignin()
     } catch (err: unknown) {
       if (err instanceof Error) {
-        // エラーの内容を表示
-        window.alert(err.message)
+        const errorMessage = err.message
+        if (errorMessage === 'user not found') {
+          toast.error('該当のユーザーは存在しません')
+        } else if (errorMessage === 'invalid parameters') {
+          toast.error('不正な入力値です')
+        } else if (errorMessage === 'incorrect password') {
+          toast.error('パスワードが違います')
+        } else {
+          window.alert(errorMessage)
+        }
         onSignin && onSignin(err)
       }
     } finally {

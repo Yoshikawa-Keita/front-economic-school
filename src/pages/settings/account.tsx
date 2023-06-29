@@ -5,6 +5,8 @@ import { getUserFromCookie } from '@/utils/helper'
 import UserSettingHeader from '@/components/UserSettingHeader'
 import UserAccount from '@/components/UserAccount'
 import { toast } from 'react-toastify'
+import UserDeletion from '@/components/UserDeletion'
+import Spacer from '@/components/Spacer'
 
 const Account: NextPage = () => {
   const router = useRouter()
@@ -17,11 +19,25 @@ const Account: NextPage = () => {
     }
   }
 
+  const onDeactivate = async (err?: Error) => {
+    if (!err) {
+      toast.success('アカウントを削除しました', { autoClose: false })
+      await router.push('/signin')
+    } else {
+      toast.error('退会処理に失敗しました')
+    }
+  }
+
   return (
     <Layout>
       <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 pt-4">
         <UserSettingHeader />
         <UserAccount authUser={authUser} onUpdate={onUpdate}></UserAccount>
+        <Spacer height={50} />
+        <UserDeletion
+          authUser={authUser}
+          onDeactivate={onDeactivate}
+        ></UserDeletion>
       </div>
     </Layout>
   )
