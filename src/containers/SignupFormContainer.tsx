@@ -1,9 +1,8 @@
-import SigninForm from '@/components/SigninForm'
 import SignupForm from '@/components/SignupForm'
-import { useAuthContext } from '@/contexts/AuthContext'
 import { useGlobalSpinnerActionsContext } from '@/contexts/GlobalSpinnerContext'
 import signup from '@/services/auth/signup'
 import { ApiContext } from '@/types'
+import { toast } from 'react-toastify'
 
 interface SignupFormContainerProps {
   /**
@@ -46,8 +45,18 @@ const SignupFormContainer = ({ onSignup }: SignupFormContainerProps) => {
       onSignup && onSignup()
     } catch (err: unknown) {
       if (err instanceof Error) {
-        // エラーの内容を表示
-        window.alert(err.message)
+        const errorMessage = err.message
+        if (errorMessage === 'user not found') {
+          // toast.error('該当のユーザーは存在しません');
+        } else if (errorMessage === 'invalid parameters') {
+          toast.error('不正な入力値です')
+        } else if (errorMessage.includes('username already exists')) {
+          toast.error(
+            'そのユーザーネームまたはメールアドレスはすでに使用されています',
+          )
+        } else {
+          window.alert(errorMessage)
+        }
         onSignup && onSignup(err)
       }
     } finally {

@@ -69,7 +69,7 @@ const UserAccount = ({ authUser, onUpdate }: UserAccountProps) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 py-2">
+    <div className="flex flex-col items-center justify-start bg-gray-100 py-2">
       <h1 className="text-2xl font-bold mt-8 mb-5">アカウント編集</h1>
       <p className="mb-2">ユーザー名: {authUser?.username}</p>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">

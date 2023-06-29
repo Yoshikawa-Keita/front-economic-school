@@ -10,21 +10,16 @@ const Signup: NextPage = () => {
   // サインアップ後のイベントハンドラ
   const handleSignup = async (err?: Error) => {
     if (!err) {
-      // // サインアップに成功し、クエリが指定されている場合はそのURLに移動。
-      // // デフォルトはサインインページに移動。
-      // const redirectTo = (router.query['redirect_to'] as string) ?? '/signin'
-
-      // console.log('Redirecting', redirectTo)
-      // await router.push(redirectTo)
-      console.log('Redirecting to email verification page')
       await router.push('/email-verification-pending')
     }
   }
   return (
     <Layout>
-      <div className="flex justify-center ">
+      <div className="flex flex-col items-center">
         <SignupFormContainer onSignup={handleSignup} />
-        <Link href="/signin">ログインはこちらから</Link>
+        <Link href="/signin" className="mt-4 text-blue-500 hover:underline">
+          ログインはこちらから
+        </Link>
       </div>
     </Layout>
   )

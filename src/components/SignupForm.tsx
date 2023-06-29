@@ -48,77 +48,119 @@ const SignupForm = ({ onSignup }: SignupFormProps) => {
     onSignup &&
       onSignup(username, fullName, email, userType, password, finalProfileImage)
   }
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-1">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <h1 className="text-2xl font-bold text-center mb-6">
+          新規登録フォーム
+        </h1>
+      </div>
+      <div>
+        <label
+          className="block text-sm font-medium text-gray-700"
+          htmlFor="username"
+        >
+          ユーザー名（変更不可）
+        </label>
         <input
-          {...register('username', { required: true })}
-          name="username"
+          {...register('username', {
+            required: true,
+            minLength: 3,
+            maxLength: 10,
+            pattern: /^[a-z0-9]+$/i,
+          })}
+          id="username"
           type="text"
-          placeholder="ユーザー名"
+          placeholder="3-10文字の半角英数字"
           className={`w-full px-3 py-2 border ${
             errors.username ? 'border-red-500' : 'border-gray-300'
           } rounded`}
         />
         {errors.username && (
-          <p className="text-xs text-red-500 pl-1">ユーザー名は必須です</p>
+          <p className="text-xs text-red-500">入力が不正です</p>
         )}
       </div>
-      <div className="mb-1">
+      <div>
+        <label
+          className="block text-sm font-medium text-gray-700"
+          htmlFor="fullName"
+        >
+          表示名
+        </label>
         <input
-          {...register('fullName', { required: true })}
-          name="fullName"
+          {...register('fullName', {
+            required: true,
+            minLength: 3,
+            maxLength: 10,
+            pattern: /^[a-z0-9]+$/i,
+          })}
+          id="fullName"
           type="text"
-          placeholder="フルネーム"
+          placeholder="3-10文字の半角英数字"
           className={`w-full px-3 py-2 border ${
             errors.fullName ? 'border-red-500' : 'border-gray-300'
           } rounded`}
         />
         {errors.fullName && (
-          <p className="text-xs text-red-500 pl-1">フルネームは必須です</p>
+          <p className="text-xs text-red-500">入力が不正です</p>
         )}
       </div>
-      <div className="mb-1">
+      <div>
+        <label
+          className="block text-sm font-medium text-gray-700"
+          htmlFor="email"
+        >
+          メールアドレス
+        </label>
         <input
           {...register('email', { required: true })}
-          name="email"
+          id="email"
           type="email"
           placeholder="メールアドレス"
           className={`w-full px-3 py-2 border ${
             errors.email ? 'border-red-500' : 'border-gray-300'
           } rounded`}
         />
-        {errors.email && (
-          <p className="text-xs text-red-500 pl-1">メールアドレスは必須です</p>
-        )}
+        {errors.email && <p className="text-xs text-red-500">入力が必要です</p>}
       </div>
-      <div className="mb-2">
+      <div>
+        <label
+          className="block text-sm font-medium text-gray-700"
+          htmlFor="password"
+        >
+          パスワード
+        </label>
         <input
           {...register('password', { required: true, minLength: 6 })}
-          name="password"
+          id="password"
           type="password"
-          placeholder="パスワード"
+          placeholder="6文字以上"
           className={`w-full px-3 py-2 border ${
             errors.password ? 'border-red-500' : 'border-gray-300'
           } rounded`}
         />
         {errors.password && (
-          <p className="text-xs text-red-500 pl-1">
+          <p className="text-xs text-red-500">
             {errors.password.type === 'required'
-              ? 'パスワードは必須です'
-              : 'パスワードは6文字以上で入力してください'}
+              ? '入力が必要です'
+              : '6文字以上で入力してください'}
           </p>
         )}
       </div>
-      <div className="mb-2">
+      <div>
+        <label
+          className="block text-sm font-medium text-gray-700"
+          htmlFor="profileImage"
+        >
+          プロフィール画像をアップロード
+        </label>
         <FileUploader
           onFileSelect={(files: FileList) => setValue('profileImage', files)}
           message="※ 画像は後で設定/変更可能です"
           accept=".jpg,.jpeg,.png"
         />
         {errors.profileImage && (
-          <p className="text-xs text-red-500 pl-1">
+          <p className="text-xs text-red-500">
             プロフィール画像のアップロードに問題があります
           </p>
         )}
