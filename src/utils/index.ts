@@ -9,6 +9,12 @@ export const fetcher = async (
   const res = await fetchWithToken(resource, init)
 
   if (!res.ok) {
+    if (res.status === 503) {
+      // 503はメンテナンスモードを表すために選択した例です
+      // メンテナンスページへリダイレクト
+      window.location.href = '/maintenance'
+      return
+    }
     // refresh the token if response status is 401 (Unauthorized)
     if (res.status === 401) {
       const refreshRes = await renewAccessToken()

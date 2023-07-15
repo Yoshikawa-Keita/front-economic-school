@@ -4,16 +4,26 @@ import GlobalSpinnerContextProvider from '@/contexts/GlobalSpinnerContext'
 import '@/styles/globals.css'
 import { ToastContainer } from 'react-toastify'
 import { ApiContext } from '@/types'
-import type { AppProps } from 'next/app'
+import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import Head from 'next/head'
 import { SWRConfig } from 'swr'
 import { fetcher } from '@/utils'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const context: ApiContext = {
   apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
 }
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    if (pageProps.isMaintenanceMode) {
+      router.push('/maintenance')
+    }
+  }, [pageProps.isMaintenanceMode])
+
   return (
     <>
       <Head>
@@ -53,6 +63,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </SWRConfig>
     </>
   )
+}
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps: AppInitialProps = { pageProps: {} }
+  if (appContext.Component.getInitialProps) {
+    appProps.pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx,
+    )
+  }
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/health`)
+  if (!res.ok) {
+    appProps.pageProps.isMaintenanceMode = true
+  }
+
+  return appProps
 }
 
 export default MyApp
