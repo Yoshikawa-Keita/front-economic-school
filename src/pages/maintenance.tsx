@@ -1,5 +1,5 @@
-import React from "react";
-import "tailwindcss/tailwind.css";
+import React from 'react'
+import 'tailwindcss/tailwind.css'
 
 const Maintenance: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const Maintenance: React.FC = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Maintenance;
+export default Maintenance
