@@ -71,7 +71,7 @@ const SignupForm = ({ onSignup }: SignupFormProps) => {
           })}
           id="username"
           type="text"
-          placeholder="3-10文字の半角英数字"
+          placeholder="3-10文字の半角英数字(小文字)"
           className={`w-full px-3 py-2 border ${
             errors.username ? 'border-red-500' : 'border-gray-300'
           } rounded`}

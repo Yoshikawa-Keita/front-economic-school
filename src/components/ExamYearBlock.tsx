@@ -39,11 +39,12 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
 
   const renderLinkForAll = (url: string, text: string) => {
     if (!url.includes('undefined')) {
-      // const context: ApiContext = {
-      //     apiRootUrl: process.env.API_BASE_URL || 'http://localhost:8080',
-      // }
-      if (checkUserType(1) || checkUserType(2)) {
-        // const response = await getSignedUrl(context, {file_path: url})
+      if (
+        checkUserType(0) ||
+        checkUserType(1) ||
+        checkUserType(2) ||
+        checkUserType(3)
+      ) {
         return (
           <a
             href="#"
@@ -68,8 +69,40 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
     }
   }
 
-  const renderLinkForOne = (url: string, text: string) => {
-    if (checkUserType(2)) {
+  const renderLinkForStd = (url: string, text: string) => {
+    if (checkUserType(2) || checkUserType(3)) {
+      if (!url.includes('undefined')) {
+        return (
+          <a
+            href={url}
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {text}
+          </a>
+        )
+      } else {
+        return (
+          <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (Coming Soon...)`}</span>
+        )
+      }
+    } else {
+      return (
+        <div>
+          <span className="text-blue-600 opacity-50 cursor-not-allowed">
+            {text}
+          </span>
+          <span className="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded-full ml-2">
+            会員限定
+          </span>
+        </div>
+      )
+    }
+  }
+
+  const renderLinkForPrm = (url: string, text: string) => {
+    if (checkUserType(3)) {
       if (!url.includes('undefined')) {
         return (
           <a
@@ -108,22 +141,45 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
           <div key={i} className="border border-gray-200 p-2 rounded-md">
             <h3>大問{exam.question_num}</h3>
             <div className="flex justify-between">
-              {renderLinkForAll(
-                `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/question/${exam.question_pdf_url}`,
-                '問題',
-              )}
-              {renderLinkForAll(
-                `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/answer/${exam.answer_pdf_url}`,
-                '解答',
-              )}
-              {renderLinkForAll(
-                `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/critique/${exam.critique_url}`,
-                '講評',
-              )}
-              {renderLinkForOne(
-                `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
-                '解説動画',
-              )}
+              {i === 0
+                ? renderLinkForAll(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/question/${exam.question_pdf_url}`,
+                    '問題',
+                  )
+                : renderLinkForAll(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/question/${exam.question_pdf_url}`,
+                    '問題',
+                  )}
+
+              {i === 0
+                ? renderLinkForAll(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/answer/${exam.answer_pdf_url}`,
+                    '解答',
+                  )
+                : renderLinkForStd(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/answer/${exam.answer_pdf_url}`,
+                    '解答',
+                  )}
+
+              {i === 0
+                ? renderLinkForAll(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/critique/${exam.critique_url}`,
+                    '講評',
+                  )
+                : renderLinkForStd(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/critique/${exam.critique_url}`,
+                    '講評',
+                  )}
+
+              {i === 0
+                ? renderLinkForAll(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
+                    '解説動画',
+                  )
+                : renderLinkForPrm(
+                    `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
+                    '解説動画',
+                  )}
               {authUser && (
                 <ExamToggleButton
                   username={authUser.username}

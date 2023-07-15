@@ -42,18 +42,20 @@ const UserIcon = ({ size, imageUrl }: UserIconProps) => {
       </div>
       {showSubMenu && (
         <div className="absolute bg-white shadow-md py-2 mt-1 rounded">
-          <Link
+          {/* <Link
             href={`/users/${authUser?.username}`}
             className="block px-4 py-2 text-black hover:bg-gray-200"
           >
             マイページ
-          </Link>
-          <Link
-            href="/settings/profile"
-            className="block px-4 py-2 text-black hover:bg-gray-200"
-          >
-            ユーザー設定
-          </Link>
+          </Link> */}
+          {authUser?.user_type !== 1 && (
+            <Link
+              href="/settings/profile"
+              className="block px-4 py-2 text-black hover:bg-gray-200"
+            >
+              ユーザー設定
+            </Link>
+          )}
           <hr className="border-gray-300" />
           <button
             className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200"

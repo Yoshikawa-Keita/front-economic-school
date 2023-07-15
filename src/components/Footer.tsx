@@ -10,12 +10,12 @@ const Footer = () => {
             <div className="mb-2">
               <Link href="/">トップ</Link>
             </div>
-            <div className="mb-2">
+            {/* <div className="mb-2">
               <Link href="/">採用</Link>
             </div>
             <div className="mb-2">
               <Link href="/">お知らせ</Link>
-            </div>
+            </div> */}
           </nav>
         </div>
       </div>
