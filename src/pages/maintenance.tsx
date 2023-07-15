@@ -1,5 +1,5 @@
-import React from 'react'
-import 'tailwindcss/tailwind.css'
+import React from "react";
+import "tailwindcss/tailwind.css";
 
 const Maintenance: React.FC = () => {
   return (
@@ -10,10 +10,12 @@ const Maintenance: React.FC = () => {
         </h1>
         <p className="text-md md:text-xl">
           現在、システムメンテナンスを行っています。ご迷惑をおかけしますが、しばらくお待ちください。
+          <br />
+          24時 〜 7時の間は定時メンテナンスです。
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Maintenance
+export default Maintenance;
