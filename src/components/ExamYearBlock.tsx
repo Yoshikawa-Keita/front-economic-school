@@ -64,7 +64,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
       )
     } else {
       return (
-        <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (Coming Soon...)`}</span>
+        <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
       )
     }
   }
@@ -84,7 +84,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         )
       } else {
         return (
-          <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (Coming Soon...)`}</span>
+          <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
         )
       }
     } else {
@@ -116,7 +116,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         )
       } else {
         return (
-          <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (Coming Soon...)`}</span>
+          <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
         )
       }
     } else {
@@ -136,7 +136,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   return (
     <div className="border border-gray-300 p-4 mb-8 rounded-md">
       <h2 className="text-lg font-bold mb-4">{year}年度</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {exams.map((exam, i) => (
           <div key={i} className="border border-gray-200 p-2 rounded-md">
             <h3>大問{exam.question_num}</h3>
@@ -161,24 +161,24 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
                     '解答',
                   )}
 
-              {i === 0
+              {/* {i === 0
                 ? renderLinkForAll(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/critique/${exam.critique_url}`,
-                    '講評',
+                    "講評"
                   )
                 : renderLinkForStd(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/critique/${exam.critique_url}`,
-                    '講評',
-                  )}
+                    "講評"
+                  )} */}
 
               {i === 0
                 ? renderLinkForAll(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
-                    '解説動画',
+                    '動画',
                   )
                 : renderLinkForPrm(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
-                    '解説動画',
+                    '動画',
                   )}
               {authUser && (
                 <ExamToggleButton

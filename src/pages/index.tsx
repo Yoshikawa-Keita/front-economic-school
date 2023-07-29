@@ -144,7 +144,10 @@ const Home: NextPage = () => {
               と提携しています。
             </p>
             <p className="mb-8 leading-relaxed text-lg sm:text-xl lg:text-2xl">
-              オンライン編入学院のメンバーは一部機能が無料で利用できます。
+              オンライン編入学院のメンバーは無料で利用できます。
+            </p>
+            <p className="mb-8 leading-relaxed text-lg sm:text-xl lg:text-2xl">
+              フリーユーザーでも一部機能が無料で利用できます。
             </p>
           </div>
         </div>
