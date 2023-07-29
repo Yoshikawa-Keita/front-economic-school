@@ -1,12 +1,12 @@
-import { NextPage } from 'next'
-import Layout from '@/components/Layout'
-import Image from 'next/image'
-import Link from 'next/link'
-import Divider from '@/components/Divider'
-import { getUserFromCookie } from '@/utils/helper'
+import { NextPage } from "next";
+import Layout from "@/components/Layout";
+import Image from "next/image";
+import Link from "next/link";
+import Divider from "@/components/Divider";
+import { getUserFromCookie } from "@/utils/helper";
 
 const Home: NextPage = () => {
-  const authUser = getUserFromCookie()
+  const authUser = getUserFromCookie();
   return (
     <Layout>
       <div className="flex justify-center items-center bg-blue-400 h-[150px] md:h-[200px]">
@@ -144,7 +144,10 @@ const Home: NextPage = () => {
               と提携しています。
             </p>
             <p className="mb-8 leading-relaxed text-lg sm:text-xl lg:text-2xl">
-              オンライン編入学院のメンバーは一部機能が無料で利用できます。
+              オンライン編入学院のメンバーは無料で利用できます。
+            </p>
+            <p className="mb-8 leading-relaxed text-lg sm:text-xl lg:text-2xl">
+              フリーユーザーでも一部機能が無料で利用できます。
             </p>
           </div>
         </div>
@@ -166,7 +169,7 @@ const Home: NextPage = () => {
         </section>
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
