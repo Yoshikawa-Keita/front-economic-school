@@ -40,10 +40,10 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const renderLinkForAll = (url: string, text: string) => {
     if (!url.includes('undefined')) {
       if (
-        checkUserType(0) ||
         checkUserType(1) ||
         checkUserType(2) ||
-        checkUserType(3)
+        checkUserType(3) ||
+        checkUserType(4)
       ) {
         return (
           <a
@@ -70,7 +70,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   }
 
   const renderLinkForStd = (url: string, text: string) => {
-    if (checkUserType(2) || checkUserType(3)) {
+    if (checkUserType(3) || checkUserType(4)) {
       if (!url.includes('undefined')) {
         return (
           <a
