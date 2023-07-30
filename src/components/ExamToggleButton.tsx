@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import upsertUserExam, {
   UpsertUserExamParams,
-} from '@/services/exam/upsertUserExam'
-import { ApiContext } from '@/types'
+} from '@/services/exam/upsertUserExam';
+import { ApiContext } from '@/types';
 
 type ExamToggleButtonProps = {
-  username: string
-  examId: number
-  university: string
-  initialIsActive: boolean
-  fetchCompletedExams: () => Promise<void>
-}
+  username: string;
+  examId: number;
+  university: string;
+  initialIsActive: boolean;
+  fetchCompletedExams: () => Promise<void>;
+};
 
 const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
   username,
@@ -19,7 +19,7 @@ const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
   initialIsActive,
   fetchCompletedExams,
 }) => {
-  const [isActive, setIsActive] = useState(initialIsActive)
+  const [isActive, setIsActive] = useState(initialIsActive);
 
   const handleToggle = async () => {
     try {
@@ -28,22 +28,22 @@ const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
         exam_id: examId,
         university: university,
         is_completed: !isActive,
-      }
+      };
 
       // Assume that ApiContext is available globally, for example through a React Context
       const context: ApiContext = {
         apiRootUrl:
           process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
-      }
+      };
 
-      await upsertUserExam(context, params)
-      setIsActive(!isActive)
+      await upsertUserExam(context, params);
+      setIsActive(!isActive);
       // ボタンがトグルされた後に再取得を行う
       // await fetchCompletedExams()
     } catch (error) {
-      console.error('Failed to upsert user exam:', error)
+      console.error('Failed to upsert user exam:', error);
     }
-  }
+  };
 
   return (
     <div
@@ -71,7 +71,7 @@ const ExamToggleButton: React.FC<ExamToggleButtonProps> = ({
         ></span>
       </label>
     </div>
-  )
-}
+  );
+};
 
-export default ExamToggleButton
+export default ExamToggleButton;

@@ -3,29 +3,29 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
   NextPage,
-} from 'next'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+} from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import Layout from '@/components/Layout'
+import Layout from '@/components/Layout';
 
-import getAllUsers from '@/services/users/get-all-users'
-import getUser from '@/services/users/getUserByUsername'
-import type { ApiContext } from '@/types'
+import getAllUsers from '@/services/users/get-all-users';
+import getUser from '@/services/users/getUserByUsername';
+import type { ApiContext } from '@/types';
 
 type UserPageProps = {
-  username: string
-}
+  username: string;
+};
 
 const UserPage: NextPage<UserPageProps> = ({ username }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
-  return <Layout>{username}</Layout>
-}
+  return <Layout>{username}</Layout>;
+};
 
 //   export const getStaticPaths: GetStaticPaths = async () => {
 //     const context: ApiContext = {
@@ -64,4 +64,4 @@ const UserPage: NextPage<UserPageProps> = ({ username }) => {
 //     }
 //   }
 
-export default UserPage
+export default UserPage;

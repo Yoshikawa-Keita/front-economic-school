@@ -1,20 +1,20 @@
-import { Person } from '@mui/icons-material'
-import StarBorderIcon from '@mui/icons-material/StarBorder'
-import Cookies from 'js-cookie'
-import Link from 'next/link'
-import Icon from '../../public/images/userIcon.png'
-import AppLogo from './AppLogo'
-import UserIcon from './UserIcon'
-import { useAuthContext } from '@/contexts/AuthContext'
-import { useState } from 'react'
-import { FaBars } from 'react-icons/fa'
+import { Person } from '@mui/icons-material';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Cookies from 'js-cookie';
+import Link from 'next/link';
+import Icon from '../../public/images/userIcon.png';
+import AppLogo from './AppLogo';
+import UserIcon from './UserIcon';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { useState } from 'react';
+import { FaBars } from 'react-icons/fa';
 
 /**
  * ヘッダー
  */
 const Header = () => {
-  const { authUser, isLoading } = useAuthContext()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { authUser, isLoading } = useAuthContext();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className="p-2 md:p-3 flex justify-between sticky top-0 z-50 bg-white">
@@ -44,16 +44,16 @@ const Header = () => {
                 <UserIcon imageUrl={authUser.profile_image_url} />
                 <p className="mt-0 mx-auto">{authUser.username}</p>
               </div>
-            )
+            );
           } else if (isLoading) {
-            return <div>now Loading...</div>
+            return <div>now Loading...</div>;
           } else {
             // サインインしてない場合はアイコンを表示
             return (
               <Link href="/signin">
                 <Person />
               </Link>
-            )
+            );
           }
         })()}
       </nav>
@@ -87,7 +87,7 @@ const Header = () => {
         </div>
       )}
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

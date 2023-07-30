@@ -1,33 +1,33 @@
-import Cookies from 'js-cookie'
-import Image from 'next/image'
-import Link from 'next/link'
+import Cookies from 'js-cookie';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import Icon from '../../public/images/userIcon.png'
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import Icon from '../../public/images/userIcon.png';
 
-import { useAuthContext } from '@/contexts/AuthContext'
-import signout from '@/services/auth/signout'
+import { useAuthContext } from '@/contexts/AuthContext';
+import signout from '@/services/auth/signout';
 
 interface UserIconProps {
-  size?: number
-  imageUrl: string
+  size?: number;
+  imageUrl: string;
 }
 
 const UserIcon = ({ size, imageUrl }: UserIconProps) => {
-  const { authUser } = useAuthContext()
-  const [showSubMenu, setShowSubMenu] = useState(false)
+  const { authUser } = useAuthContext();
+  const [showSubMenu, setShowSubMenu] = useState(false);
 
   const handleClick = () => {
-    setShowSubMenu(!showSubMenu)
-  }
-  const router = useRouter()
+    setShowSubMenu(!showSubMenu);
+  };
+  const router = useRouter();
   // サインアウト後のイベントハンドラ
   const handleSignout = async (err?: Error) => {
     if (!err) {
-      await router.push('/signin')
+      await router.push('/signin');
     }
-  }
+  };
 
   return (
     <div>
@@ -60,9 +60,9 @@ const UserIcon = ({ size, imageUrl }: UserIconProps) => {
           <button
             className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200"
             onClick={() => {
-              Cookies.remove('user')
-              Cookies.remove('accessToken')
-              router.push('/signin')
+              Cookies.remove('user');
+              Cookies.remove('accessToken');
+              router.push('/signin');
             }}
           >
             ログアウト
@@ -70,7 +70,7 @@ const UserIcon = ({ size, imageUrl }: UserIconProps) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default UserIcon
+export default UserIcon;

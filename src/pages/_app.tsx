@@ -1,28 +1,28 @@
-import GlobalSpinner from '@/components/GlobalSpinner'
-import { AuthContextProvider } from '@/contexts/AuthContext'
-import GlobalSpinnerContextProvider from '@/contexts/GlobalSpinnerContext'
-import '@/styles/globals.css'
-import { ToastContainer } from 'react-toastify'
-import { ApiContext } from '@/types'
-import type { AppContext, AppInitialProps, AppProps } from 'next/app'
-import Head from 'next/head'
-import { SWRConfig } from 'swr'
-import { fetcher } from '@/utils'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import GlobalSpinner from '@/components/GlobalSpinner';
+import { AuthContextProvider } from '@/contexts/AuthContext';
+import GlobalSpinnerContextProvider from '@/contexts/GlobalSpinnerContext';
+import '@/styles/globals.css';
+import { ToastContainer } from 'react-toastify';
+import { ApiContext } from '@/types';
+import type { AppContext, AppInitialProps, AppProps } from 'next/app';
+import Head from 'next/head';
+import { SWRConfig } from 'swr';
+import { fetcher } from '@/utils';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const context: ApiContext = {
   apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-}
+};
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (pageProps.isMaintenanceMode) {
-      router.push('/maintenance')
+      router.push('/maintenance');
     }
-  }, [pageProps.isMaintenanceMode])
+  }, [pageProps.isMaintenanceMode]);
 
   return (
     <>
@@ -62,27 +62,27 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         </GlobalSpinnerContextProvider>
       </SWRConfig>
     </>
-  )
-}
+  );
+};
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-  const appProps: AppInitialProps = { pageProps: {} }
+  const appProps: AppInitialProps = { pageProps: {} };
   if (appContext.Component.getInitialProps) {
     appProps.pageProps = await appContext.Component.getInitialProps(
       appContext.ctx,
-    )
+    );
   }
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/health`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/health`);
     if (!res.ok) {
-      appProps.pageProps.isMaintenanceMode = true
+      appProps.pageProps.isMaintenanceMode = true;
     }
   } catch (error) {
     // 503 Service Temporarily Unavailable などのエラーに対応
-    appProps.pageProps.isMaintenanceMode = true
+    appProps.pageProps.isMaintenanceMode = true;
   }
 
-  return appProps
-}
+  return appProps;
+};
 
-export default MyApp
+export default MyApp;

@@ -1,51 +1,51 @@
-import useTranslation from 'next-translate/useTranslation'
-import { useState, useEffect } from 'react'
-import ExamCompletionChart from '@/components/ExamCompletionChart'
-import Layout from '@/components/Layout'
-import { useAuthContext } from '@/contexts/AuthContext'
-import { getExamCountByUniversity } from '@/services/exam/getExamCountByUniversity'
-import listCompletedUserExams from '@/services/exam/listCompletedUserExams'
-import { ApiContext, Exam, ExamCountByUniversity, UserExam } from '@/types'
-import { useAuthGuard } from '@/utils/hooks'
+import useTranslation from 'next-translate/useTranslation';
+import { useState, useEffect } from 'react';
+import ExamCompletionChart from '@/components/ExamCompletionChart';
+import Layout from '@/components/Layout';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { getExamCountByUniversity } from '@/services/exam/getExamCountByUniversity';
+import listCompletedUserExams from '@/services/exam/listCompletedUserExams';
+import { ApiContext, Exam, ExamCountByUniversity, UserExam } from '@/types';
+import { useAuthGuard } from '@/utils/hooks';
 
 const Management = () => {
-  useAuthGuard()
-  const { authUser } = useAuthContext()
+  useAuthGuard();
+  const { authUser } = useAuthContext();
 
   const [examCountByUnivercity, setExamCountByUnivercity] = useState<
     ExamCountByUniversity[]
-  >([])
+  >([]);
   const fetchExamCountByUniv = async () => {
     const apiContext: ApiContext = {
       apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-    }
-    const response = await getExamCountByUniversity(apiContext)
-    const examCntByUniv = response?.examCountByUniversity || []
-    setExamCountByUnivercity(examCntByUniv)
-  }
+    };
+    const response = await getExamCountByUniversity(apiContext);
+    const examCntByUniv = response?.examCountByUniversity || [];
+    setExamCountByUnivercity(examCntByUniv);
+  };
 
-  const [completedExams, setCompletedExams] = useState<UserExam[]>([])
+  const [completedExams, setCompletedExams] = useState<UserExam[]>([]);
   const fetchUserExams = async () => {
     if (authUser?.username) {
       const apiContext: ApiContext = {
         apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-      }
+      };
       const params = {
         username: authUser.username,
-      }
+      };
 
-      const response = await listCompletedUserExams(apiContext, params)
-      const userExams = response?.user_exams || []
-      setCompletedExams(userExams)
+      const response = await listCompletedUserExams(apiContext, params);
+      const userExams = response?.user_exams || [];
+      setCompletedExams(userExams);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchUserExams()
-    fetchExamCountByUniv()
-  }, [])
+    fetchUserExams();
+    fetchExamCountByUniv();
+  }, []);
 
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common');
 
   return (
     <Layout>
@@ -56,14 +56,14 @@ const Management = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
           {examCountByUnivercity.map((examCntByUniv) => {
-            let completed = 0
-            let notCompleted = 0
+            let completed = 0;
+            let notCompleted = 0;
             completedExams.map((examUser) => {
               completed = completedExams.filter(
                 (examUser) => examUser.university === examCntByUniv.university,
-              ).length
-              notCompleted = examCntByUniv.count - completed
-            })
+              ).length;
+              notCompleted = examCntByUniv.count - completed;
+            });
 
             return (
               <div
@@ -106,12 +106,12 @@ const Management = () => {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Management
+export default Management;

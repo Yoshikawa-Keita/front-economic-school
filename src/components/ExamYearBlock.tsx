@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
-import ExamToggleButton from "./ExamToggleButton";
-import { useAuthContext } from "@/contexts/AuthContext";
-import getSignedUrl from "@/services/auth/getSignedUrl";
-import { ApiContext, Exam, UserExam } from "@/types";
+import { useRef, useState } from 'react';
+import ExamToggleButton from './ExamToggleButton';
+import { useAuthContext } from '@/contexts/AuthContext';
+import getSignedUrl from '@/services/auth/getSignedUrl';
+import { ApiContext, Exam, UserExam } from '@/types';
 
 type ExamYearBlockProps = {
   year: number;
@@ -22,7 +22,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
     return authUser && authUser.user_type === userType;
   };
   const [showPDF, setShowPDF] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState("");
+  const [pdfUrl, setPdfUrl] = useState('');
   const pdfRef = useRef<HTMLIFrameElement>(null);
 
   const handleFullscreen = () => {
@@ -35,7 +35,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         // Firefox
         (current as any).mozRequestFullScreen();
       } else if ((current as any).webkitRequestFullscreen) {
-        // Chrome, Safari & Opera
+        // Chrome, Safari & Operas
         (current as any).webkitRequestFullscreen();
       } else if ((current as any).msRequestFullscreen) {
         // IE/Edge
@@ -48,7 +48,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
     e.preventDefault();
     const context: ApiContext = {
       apiRootUrl:
-        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080",
+        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
     };
     const response = await getSignedUrl(context, { file_path: url });
     setPdfUrl(response.signed_url);
@@ -57,12 +57,12 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
 
   const isExamCompleted = (examId: number) => {
     return completedExams.some(
-      (completedExam) => completedExam.exam_id === examId
+      (completedExam) => completedExam.exam_id === examId,
     );
   };
 
   const renderLinkForAll = (url: string, text: string) => {
-    if (!url.includes("undefined")) {
+    if (!url.includes('undefined')) {
       if (
         checkUserType(1) ||
         checkUserType(2) ||
@@ -93,7 +93,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
 
   const renderLinkForStd = (url: string, text: string) => {
     if (checkUserType(3) || checkUserType(4)) {
-      if (!url.includes("undefined")) {
+      if (!url.includes('undefined')) {
         return (
           <a
             href="#"
@@ -126,7 +126,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
 
   const renderLinkForPrm = (url: string, text: string) => {
     if (checkUserType(3)) {
-      if (!url.includes("undefined")) {
+      if (!url.includes('undefined')) {
         return (
           <a
             href="#"
@@ -162,12 +162,12 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
       {showPDF && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-4 rounded-md max-w-screen-lg mx-auto w-full relative">
-            <div className="relative" style={{ paddingBottom: "56.25%" }}>
+            <div className="relative" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 ref={pdfRef} // pdfRefをiframeに関連付ける
                 src={pdfUrl}
                 className="absolute top-0 left-0 w-full h-full"
-                style={{ border: "none" }}
+                style={{ border: 'none' }}
                 title="PDF Document"
               ></iframe>
             </div>
@@ -195,21 +195,21 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
               {i === 0
                 ? renderLinkForAll(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/question/${exam.question_pdf_url}`,
-                    "問題"
+                    '問題',
                   )
                 : renderLinkForAll(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/question/${exam.question_pdf_url}`,
-                    "問題"
+                    '問題',
                   )}
 
               {i === 0
                 ? renderLinkForAll(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/answer/${exam.answer_pdf_url}`,
-                    "解答"
+                    '解答',
                   )
                 : renderLinkForStd(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.university}/${exam.subject}/answer/${exam.answer_pdf_url}`,
-                    "解答"
+                    '解答',
                   )}
 
               {/* {i === 0
@@ -225,11 +225,11 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
               {i === 0
                 ? renderLinkForAll(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
-                    "動画"
+                    '動画',
                   )
                 : renderLinkForPrm(
                     `${process.env.NEXT_PUBLIC_CLOUDFRONT_HOST}/${exam.video_url}`,
-                    "動画"
+                    '動画',
                   )}
               {authUser && (
                 <ExamToggleButton

@@ -1,8 +1,8 @@
 type EditableToggleButtonProps = {
-  isActive: boolean
-  onToggle: () => void
-  id: string
-}
+  isActive: boolean;
+  onToggle: () => void;
+  id: string;
+};
 
 const EditableToggleButton = ({
   isActive,
@@ -13,7 +13,7 @@ const EditableToggleButton = ({
     <div
       className={`relative inline-block w-10 align-middle select-none transition duration-200 ease-in`}
       onClick={(event) => {
-        onToggle()
+        onToggle();
       }}
     >
       <input
@@ -37,7 +37,7 @@ const EditableToggleButton = ({
         ></span>
       </label>
     </div>
-  )
-}
+  );
+};
 
-export default EditableToggleButton
+export default EditableToggleButton;

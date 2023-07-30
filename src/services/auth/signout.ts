@@ -1,7 +1,7 @@
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/router'
-import type { ApiContext } from '@/types'
-import { fetcher } from '@/utils'
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import type { ApiContext } from '@/types';
+import { fetcher } from '@/utils';
 
 /**
  * 認証API（サインアウト）
@@ -9,9 +9,9 @@ import { fetcher } from '@/utils'
  * @returns サインアウトメッセージ
  */
 const signout = (context: ApiContext): void => {
-  Cookies.remove('user')
-  Cookies.remove('accessToken')
-  Cookies.remove('refreshToken')
-}
+  Cookies.remove('user');
+  Cookies.remove('accessToken');
+  Cookies.remove('refreshToken');
+};
 
-export default signout
+export default signout;
