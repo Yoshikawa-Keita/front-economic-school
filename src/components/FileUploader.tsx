@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react';
 
 interface FileUploaderProps {
-  onFileSelect: (file: FileList) => void
-  message?: string
-  accept?: string
+  onFileSelect: (file: FileList) => void;
+  message?: string;
+  accept?: string;
 }
 
 const FileUploader: FC<FileUploaderProps> = ({
@@ -11,18 +11,18 @@ const FileUploader: FC<FileUploaderProps> = ({
   message,
   accept,
 }) => {
-  const [preview, setPreview] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(null);
 
   const fileSelectedHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      onFileSelect(event.target.files)
-      const reader = new FileReader()
+      onFileSelect(event.target.files);
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result as string)
-      }
-      reader.readAsDataURL(event.target.files[0])
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(event.target.files[0]);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col items-start">
@@ -44,7 +44,7 @@ const FileUploader: FC<FileUploaderProps> = ({
       )}
       <p className="text-xs text-gray-600">{message}</p>
     </div>
-  )
-}
+  );
+};
 
-export default FileUploader
+export default FileUploader;

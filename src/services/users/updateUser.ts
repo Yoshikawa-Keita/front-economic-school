@@ -1,31 +1,31 @@
-import Cookies from 'js-cookie'
-import { ApiContext, User } from '@/types'
-import { fetcher } from '@/utils'
-import { convertFileToBase64 } from '@/utils/helper'
+import Cookies from 'js-cookie';
+import { ApiContext, User } from '@/types';
+import { fetcher } from '@/utils';
+import { convertFileToBase64 } from '@/utils/helper';
 
 export type UpdateUserParams = {
   /**
    * ユーザー名
    */
-  username: string
+  username: string;
   /**
    * フルネーム
    */
-  fullName?: string
+  fullName?: string;
   /**
    * メールアドレス
    */
-  email?: string
+  email?: string;
 
   /**
    * ユーザープロフィール
    */
-  profileImage?: File | null
-}
+  profileImage?: File | null;
+};
 
 type UpdateUserResponse = {
-  user: User
-}
+  user: User;
+};
 
 /**
  * ユーザー情報更新API
@@ -37,11 +37,11 @@ const updateUser = async (
   context: ApiContext,
   params: UpdateUserParams,
 ): Promise<UpdateUserResponse> => {
-  const payload: any = { ...params }
+  const payload: any = { ...params };
 
   // プロファイル画像がある場合、Base64形式に変換
   if (payload.profileImage) {
-    payload.profileImage = await convertFileToBase64(payload.profileImage)
+    payload.profileImage = await convertFileToBase64(payload.profileImage);
   }
 
   const response: UpdateUserResponse = await fetcher(
@@ -55,11 +55,11 @@ const updateUser = async (
       },
       body: JSON.stringify(payload),
     },
-  )
+  );
 
-  Cookies.set('user', JSON.stringify(response.user))
+  Cookies.set('user', JSON.stringify(response.user));
 
-  return response
-}
+  return response;
+};
 
-export default updateUser
+export default updateUser;

@@ -1,33 +1,33 @@
 // typesは後ほど定義
-import { type } from 'os'
-import Cookies from 'js-cookie'
-import { cookies } from 'next/dist/client/components/headers'
-import { Cookie } from 'next/font/google'
-import { ApiContext, User } from '@/types'
+import { type } from 'os';
+import Cookies from 'js-cookie';
+import { cookies } from 'next/dist/client/components/headers';
+import { Cookie } from 'next/font/google';
+import { ApiContext, User } from '@/types';
 // 先ほど定義したsrc/utils/index.tsから読み込み
-import { fetcher } from '@/utils'
+import { fetcher } from '@/utils';
 
 export type SigninParams = {
   /**
    * ユーザー名
    * サンプルユーザーのユーザー名は "user"
    */
-  username: string
+  username: string;
   /**
    * パスワード
    * サンプルユーザーのパスワードは "password"
    */
-  password: string
-}
+  password: string;
+};
 
 type SigninResponse = {
-  user: User
-  session_id: string
-  access_token: string
-  refresh_token: string
-  access_token_expires_at: Date
-  refresh_token_expires_at: Date
-}
+  user: User;
+  session_id: string;
+  access_token: string;
+  refresh_token: string;
+  access_token_expires_at: Date;
+  refresh_token_expires_at: Date;
+};
 
 /**
  * 認証API（サインイン）
@@ -49,11 +49,11 @@ const signin = async (
       },
       body: JSON.stringify(params),
     },
-  )
-  Cookies.set('accessToken', response.access_token)
-  Cookies.set('refreshToken', response.refresh_token)
-  Cookies.set('user', JSON.stringify(response.user))
-  return response
-}
+  );
+  Cookies.set('accessToken', response.access_token);
+  Cookies.set('refreshToken', response.refresh_token);
+  Cookies.set('user', JSON.stringify(response.user));
+  return response;
+};
 
-export default signin
+export default signin;

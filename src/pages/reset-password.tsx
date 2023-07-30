@@ -1,44 +1,44 @@
-import { NextPage } from 'next'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
-import Layout from '@/components/Layout'
-import getUserByEmail from '@/services/users/getUserByEmail'
-import { ApiContext } from '@/types'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
-import sendPasswordResetEmail from '@/services/email/sendPasswordResetEmail'
+import { NextPage } from 'next';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import Layout from '@/components/Layout';
+import getUserByEmail from '@/services/users/getUserByEmail';
+import { ApiContext } from '@/types';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import sendPasswordResetEmail from '@/services/email/sendPasswordResetEmail';
 
 interface FormInput {
-  email: string
+  email: string;
 }
 
 const ResetPassword: NextPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInput>()
+  } = useForm<FormInput>();
 
   const onSubmit = async (data: FormInput) => {
     try {
       const apiContext: ApiContext = {
         apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-      }
-      const user = await getUserByEmail(apiContext, { email: data.email })
+      };
+      const user = await getUserByEmail(apiContext, { email: data.email });
       // パスワードリセットメール送信処理をここで行う
-      await sendPasswordResetEmail(apiContext, { email: data.email })
+      await sendPasswordResetEmail(apiContext, { email: data.email });
 
-      toast.success('パスワードリセットメールを送信しました。')
-      router.push('/password-reset-confirmation')
+      toast.success('パスワードリセットメールを送信しました。');
+      router.push('/password-reset-confirmation');
     } catch (error: any) {
       if (error.message === 'user not found') {
-        toast.error('入力されたメールアドレスが存在しません。')
+        toast.error('入力されたメールアドレスが存在しません。');
       } else {
-        toast.error('エラーが発生しました。再度試してみてください。')
+        toast.error('エラーが発生しました。再度試してみてください。');
       }
     }
-  }
+  };
 
   return (
     <Layout>
@@ -81,7 +81,7 @@ const ResetPassword: NextPage = () => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

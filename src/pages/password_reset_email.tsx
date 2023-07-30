@@ -1,52 +1,52 @@
-import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
-import { useForm, Controller, useFormContext } from 'react-hook-form'
-import SuccessCheckmark from '@/components/SuccessCheckmark'
-import 'tailwindcss/tailwind.css'
-import { ApiContext } from '@/types'
-import passwordReset from '@/services/email/passwordResetMail'
+import { useRouter } from 'next/router';
+import { useState, useEffect, useRef } from 'react';
+import { useForm, Controller, useFormContext } from 'react-hook-form';
+import SuccessCheckmark from '@/components/SuccessCheckmark';
+import 'tailwindcss/tailwind.css';
+import { ApiContext } from '@/types';
+import passwordReset from '@/services/email/passwordResetMail';
 
 interface FormInput {
-  password: string
-  passwordConfirmation: string
+  password: string;
+  passwordConfirmation: string;
 }
 
 const PasswordReset = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<FormInput>()
-  const password = useRef({})
-  password.current = watch('password', '')
+  } = useForm<FormInput>();
+  const password = useRef({});
+  password.current = watch('password', '');
 
-  const [resetStatus, setResetStatus] = useState('')
+  const [resetStatus, setResetStatus] = useState('');
 
   const onSubmit = async (data: FormInput) => {
-    const secretCode = router.query.secret_code as string
-    const emailId = Number(router.query.email_id)
+    const secretCode = router.query.secret_code as string;
+    const emailId = Number(router.query.email_id);
 
     const context: ApiContext = {
       apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-    }
+    };
 
     try {
       await passwordReset(context, {
         emailId,
         secretCode,
         password: data.password,
-      })
-      setResetStatus('success')
+      });
+      setResetStatus('success');
 
       setTimeout(() => {
-        router.push('/signin')
-      }, 2000)
+        router.push('/signin');
+      }, 2000);
     } catch (error) {
-      setResetStatus('failed')
+      setResetStatus('failed');
     }
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen p-4 bg-gray-100">
@@ -111,7 +111,7 @@ const PasswordReset = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PasswordReset
+export default PasswordReset;

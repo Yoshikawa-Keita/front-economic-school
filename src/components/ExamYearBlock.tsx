@@ -1,15 +1,15 @@
-import { useRef, useState } from 'react'
-import ExamToggleButton from './ExamToggleButton'
-import { useAuthContext } from '@/contexts/AuthContext'
-import getSignedUrl from '@/services/auth/getSignedUrl'
-import { ApiContext, Exam, User, UserExam } from '@/types'
+import { useRef, useState } from 'react';
+import ExamToggleButton from './ExamToggleButton';
+import { useAuthContext } from '@/contexts/AuthContext';
+import getSignedUrl from '@/services/auth/getSignedUrl';
+import { ApiContext, Exam, UserExam } from '@/types';
 
 type ExamYearBlockProps = {
-  year: number
-  exams: Exam[]
-  completedExams: UserExam[]
-  fetchCompletedExams: () => Promise<void>
-}
+  year: number;
+  exams: Exam[];
+  completedExams: UserExam[];
+  fetchCompletedExams: () => Promise<void>;
+};
 
 const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   year,
@@ -17,57 +17,49 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   completedExams,
   fetchCompletedExams,
 }) => {
-  const { authUser } = useAuthContext()
+  const { authUser } = useAuthContext();
   const checkUserType = (userType: number) => {
-    return authUser && authUser.user_type === userType
-  }
-  const [showPDF, setShowPDF] = useState(false)
-  const [pdfUrl, setPdfUrl] = useState('')
-  const pdfRef = useRef<HTMLIFrameElement>(null)
+    return authUser && authUser.user_type === userType;
+  };
+  const [showPDF, setShowPDF] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState('');
+  const pdfRef = useRef<HTMLIFrameElement>(null);
 
   const handleFullscreen = () => {
-    const current = pdfRef.current
+    const current = pdfRef.current;
 
     if (current) {
       if (current.requestFullscreen) {
-        current.requestFullscreen()
+        current.requestFullscreen();
       } else if ((current as any).mozRequestFullScreen) {
         // Firefox
-        (current as any).mozRequestFullScreen()
+        (current as any).mozRequestFullScreen();
       } else if ((current as any).webkitRequestFullscreen) {
-        // Chrome, Safari & Opera
-        (current as any).webkitRequestFullscreen()
+        // Chrome, Safari & Operas
+        (current as any).webkitRequestFullscreen();
       } else if ((current as any).msRequestFullscreen) {
         // IE/Edge
-        (current as any).msRequestFullscreen()
+        (current as any).msRequestFullscreen();
       }
     }
-  }
+  };
 
   const handlePDFClick = async (url: string, e: React.MouseEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     const context: ApiContext = {
       apiRootUrl:
         process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
-    }
-    const response = await getSignedUrl(context, { file_path: url })
-    setPdfUrl(response.signed_url)
-    setShowPDF(true)
-  }
-  const handleLinkClick = async (url: string, e: React.MouseEvent) => {
-    e.preventDefault() // デフォルトのリンク動作をキャンセル
-    const context: ApiContext = {
-      apiRootUrl:
-        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
-    }
-    const response = await getSignedUrl(context, { file_path: url })
-    window.open(response.signed_url, '_blank') // 新しいタブで署名付きURLを開く
-  }
+    };
+    const response = await getSignedUrl(context, { file_path: url });
+    setPdfUrl(response.signed_url);
+    setShowPDF(true);
+  };
+
   const isExamCompleted = (examId: number) => {
     return completedExams.some(
       (completedExam) => completedExam.exam_id === examId,
-    )
-  }
+    );
+  };
 
   const renderLinkForAll = (url: string, text: string) => {
     if (!url.includes('undefined')) {
@@ -85,19 +77,19 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
           >
             {text}
           </a>
-        )
+        );
       }
       return (
         <span className="text-blue-600 opacity-50 cursor-not-allowed">
           {text}
         </span>
-      )
+      );
     } else {
       return (
         <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
-      )
+      );
     }
-  }
+  };
 
   const renderLinkForStd = (url: string, text: string) => {
     if (checkUserType(3) || checkUserType(4)) {
@@ -112,11 +104,11 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
           >
             {text}
           </a>
-        )
+        );
       } else {
         return (
           <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
-        )
+        );
       }
     } else {
       return (
@@ -128,9 +120,9 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
             会員限定
           </span>
         </div>
-      )
+      );
     }
-  }
+  };
 
   const renderLinkForPrm = (url: string, text: string) => {
     if (checkUserType(3)) {
@@ -145,11 +137,11 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
           >
             {text}
           </a>
-        )
+        );
       } else {
         return (
           <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
-        )
+        );
       }
     } else {
       return (
@@ -161,9 +153,9 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
             会員限定
           </span>
         </div>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="border border-gray-300 p-4 mb-8 rounded-md">
@@ -253,7 +245,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ExamYearBlock
+export default ExamYearBlock;

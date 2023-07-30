@@ -1,10 +1,10 @@
-import type { ApiContext, User } from '@/types'
-import { fetcher } from '@/utils'
-import Cookies from 'js-cookie'
+import type { ApiContext, User } from '@/types';
+import { fetcher } from '@/utils';
+import Cookies from 'js-cookie';
 
 export type deleteUserParam = {
-  username: string
-}
+  username: string;
+};
 
 /**
  * ユーザー削除API
@@ -24,10 +24,10 @@ const deleteUser = async (
       Authorization: `Bearer ${Cookies.get('accessToken')}`,
     },
     body: JSON.stringify(params),
-  })
-  Cookies.remove('accessToken')
-  Cookies.remove('refreshToken')
-  Cookies.remove('user')
-}
+  });
+  Cookies.remove('accessToken');
+  Cookies.remove('refreshToken');
+  Cookies.remove('user');
+};
 
-export default deleteUser
+export default deleteUser;
