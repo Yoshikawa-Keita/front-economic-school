@@ -1,11 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import EditableToggleButton from './EditableToggleButton'
+import { useRef, useState } from 'react'
 import ExamToggleButton from './ExamToggleButton'
 import { useAuthContext } from '@/contexts/AuthContext'
 import getSignedUrl from '@/services/auth/getSignedUrl'
 import { ApiContext, Exam, User, UserExam } from '@/types'
-import { Document, Page } from 'react-pdf'
-import PDFViewer from './PDFViewer'
 
 type ExamYearBlockProps = {
   year: number
