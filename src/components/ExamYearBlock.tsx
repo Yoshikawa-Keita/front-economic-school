@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import EditableToggleButton from './EditableToggleButton'
 import ExamToggleButton from './ExamToggleButton'
 import { useAuthContext } from '@/contexts/AuthContext'
 import getSignedUrl from '@/services/auth/getSignedUrl'
 import { ApiContext, Exam, User, UserExam } from '@/types'
+import { Document, Page } from 'react-pdf'
+import PDFViewer from './PDFViewer'
 
 type ExamYearBlockProps = {
   year: number
@@ -21,6 +23,39 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const { authUser } = useAuthContext()
   const checkUserType = (userType: number) => {
     return authUser && authUser.user_type === userType
+  }
+  const [showPDF, setShowPDF] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState('')
+  const pdfRef = useRef<HTMLIFrameElement>(null)
+
+  const handleFullscreen = () => {
+    const current = pdfRef.current
+
+    if (current) {
+      if (current.requestFullscreen) {
+        current.requestFullscreen()
+      } else if ((current as any).mozRequestFullScreen) {
+        // Firefox
+        (current as any).mozRequestFullScreen()
+      } else if ((current as any).webkitRequestFullscreen) {
+        // Chrome, Safari & Opera
+        (current as any).webkitRequestFullscreen()
+      } else if ((current as any).msRequestFullscreen) {
+        // IE/Edge
+        (current as any).msRequestFullscreen()
+      }
+    }
+  }
+
+  const handlePDFClick = async (url: string, e: React.MouseEvent) => {
+    e.preventDefault()
+    const context: ApiContext = {
+      apiRootUrl:
+        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
+    }
+    const response = await getSignedUrl(context, { file_path: url })
+    setPdfUrl(response.signed_url)
+    setShowPDF(true)
   }
   const handleLinkClick = async (url: string, e: React.MouseEvent) => {
     e.preventDefault() // デフォルトのリンク動作をキャンセル
@@ -48,10 +83,8 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         return (
           <a
             href="#"
-            onClick={(e) => handleLinkClick(url, e)}
+            onClick={(e) => handlePDFClick(url, e)}
             className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             {text}
           </a>
@@ -74,7 +107,8 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
       if (!url.includes('undefined')) {
         return (
           <a
-            href={url}
+            href="#"
+            onClick={(e) => handlePDFClick(url, e)}
             className="text-blue-600 hover:underline"
             target="_blank"
             rel="noopener noreferrer"
@@ -106,7 +140,8 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
       if (!url.includes('undefined')) {
         return (
           <a
-            href={url}
+            href="#"
+            onClick={(e) => handlePDFClick(url, e)}
             className="text-blue-600 hover:underline"
             target="_blank"
             rel="noopener noreferrer"
@@ -135,6 +170,33 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
 
   return (
     <div className="border border-gray-300 p-4 mb-8 rounded-md">
+      {showPDF && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-4 rounded-md max-w-screen-lg mx-auto w-full relative">
+            <div className="relative" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                ref={pdfRef} // pdfRefをiframeに関連付ける
+                src={pdfUrl}
+                className="absolute top-0 left-0 w-full h-full"
+                style={{ border: 'none' }}
+                title="PDF Document"
+              ></iframe>
+            </div>
+            <button
+              onClick={handleFullscreen}
+              className="absolute bottom-4 right-4 text-white bg-blue-500 hover:bg-blue-700 p-2 rounded"
+            >
+              全画面表示
+            </button>
+            <button
+              onClick={() => setShowPDF(false)}
+              className="mt-2 text-white bg-blue-500 hover:bg-blue-700 p-2 rounded"
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+      )}
       <h2 className="text-lg font-bold mb-4">{year}年度</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {exams.map((exam, i) => (
