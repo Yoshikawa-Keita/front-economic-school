@@ -1,10 +1,10 @@
-import Cookies from 'js-cookie';
-import { ApiContext, Exam, ExamCountByUniversity } from '@/types';
-import { fetcher } from '@/utils';
+import Cookies from 'js-cookie'
+import { ApiContext, Exam, ExamCountByUniversity } from '@/types'
+import { fetcher } from '@/utils'
 
 export type GetExamCountByUniversityResponse = {
-  examCountByUniversity: ExamCountByUniversity[];
-};
+  examCountByUniversity: ExamCountByUniversity[]
+}
 
 const getExamCountByUniversity = async (
   context: ApiContext,
@@ -19,9 +19,9 @@ const getExamCountByUniversity = async (
         Authorization: `Bearer ${Cookies.get('accessToken')}`,
       },
     },
-  );
+  )
 
-  return response;
-};
+  return response
+}
 
-export { getExamCountByUniversity };
+export { getExamCountByUniversity }

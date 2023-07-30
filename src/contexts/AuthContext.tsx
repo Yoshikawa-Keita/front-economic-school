@@ -1,30 +1,30 @@
-import Cookies from 'js-cookie';
-import React, { useContext, useEffect, useState } from 'react';
-import signin from '@/services/auth/signin';
-import signout from '@/services/auth/signout';
-import type { ApiContext, User } from '@/types';
+import Cookies from 'js-cookie'
+import React, { useContext, useEffect, useState } from 'react'
+import signin from '@/services/auth/signin'
+import signout from '@/services/auth/signout'
+import type { ApiContext, User } from '@/types'
 
 type AuthContextType = {
-  authUser?: User;
-  isLoading: boolean;
-  signin: (username: string, password: string) => Promise<void>;
-  signout: () => Promise<void>;
-};
+  authUser?: User
+  isLoading: boolean
+  signin: (username: string, password: string) => Promise<void>
+  signout: () => Promise<void>
+}
 
 type AuthContextProviderProps = {
-  context: ApiContext;
-  authUser?: User;
-};
+  context: ApiContext
+  authUser?: User
+}
 
 const AuthContext = React.createContext<AuthContextType>({
   authUser: undefined,
   isLoading: false,
   signin: async () => Promise.resolve(),
   signout: async () => Promise.resolve(),
-});
+})
 
 export const useAuthContext = (): AuthContextType =>
-  useContext<AuthContextType>(AuthContext);
+  useContext<AuthContextType>(AuthContext)
 
 /**
  * 認証コンテキストプロバイダー
@@ -35,28 +35,28 @@ export const AuthContextProvider = ({
   authUser,
   children,
 }: React.PropsWithChildren<AuthContextProviderProps>) => {
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | undefined>(undefined)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const userData = Cookies.get('user') as string;
+    const userData = Cookies.get('user') as string
     if (userData !== undefined) {
-      setUser(JSON.parse(userData) as User);
+      setUser(JSON.parse(userData) as User)
     } else {
-      setUser(undefined);
+      setUser(undefined)
     }
-    setIsLoading(false);
-  }, [Cookies.get('user')]);
+    setIsLoading(false)
+  }, [Cookies.get('user')])
 
   // サインイン
   const signinInternal = async (username: string, password: string) => {
-    await signin(context, { username, password });
-  };
+    await signin(context, { username, password })
+  }
 
   // サインアウト
   const signoutInternal = async () => {
-    await signout(context);
-  };
+    await signout(context)
+  }
 
   return (
     <AuthContext.Provider
@@ -69,5 +69,5 @@ export const AuthContextProvider = ({
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
