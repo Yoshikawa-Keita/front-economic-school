@@ -1,48 +1,48 @@
-import { useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import EditableToggleButton from './EditableToggleButton';
-import { ApiContext, User } from '@/types';
-import deleteUser from '@/services/users/deleteUser';
-import ConfirmModal from '@/components/ConfirmModal';
-import { toast } from 'react-toastify';
+import { useState, useRef } from 'react'
+import { useForm } from 'react-hook-form'
+import EditableToggleButton from './EditableToggleButton'
+import { ApiContext, User } from '@/types'
+import deleteUser from '@/services/users/deleteUser'
+import ConfirmModal from '@/components/ConfirmModal'
+import { toast } from 'react-toastify'
 
 interface UserDeletionProps {
-  authUser: User;
-  onDeactivate?: (error?: Error) => void;
+  authUser: User
+  onDeactivate?: (error?: Error) => void
 }
 
 const context: ApiContext = {
   apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-};
+}
 
 const UserDeletion = ({ authUser, onDeactivate }: UserDeletionProps) => {
-  const [showModal, setShowModal] = useState(false);
-  const [isDeletionEnabled, setDeletionEnabled] = useState(false); // New state
+  const [showModal, setShowModal] = useState(false)
+  const [isDeletionEnabled, setDeletionEnabled] = useState(false) // New state
 
   const confirmDeactivation = () => {
     if (!isDeletionEnabled) {
-      toast.warn('退会前にトグルボタンをオンにしてください。');
-      return;
+      toast.warn('退会前にトグルボタンをオンにしてください。')
+      return
     }
 
-    const username = authUser.username;
+    const username = authUser.username
 
     deleteUser(context, { username })
       .then(() => {
         // On success
-        onDeactivate && onDeactivate();
+        onDeactivate && onDeactivate()
       })
       .catch((err: unknown) => {
         // On error
         if (err instanceof Error) {
-          toast.error(err.message);
-          onDeactivate && onDeactivate(err);
+          toast.error(err.message)
+          onDeactivate && onDeactivate(err)
         }
-      });
+      })
 
-    setShowModal(false);
-    setDeletionEnabled(false);
-  };
+    setShowModal(false)
+    setDeletionEnabled(false)
+  }
 
   return (
     <div>
@@ -76,7 +76,7 @@ const UserDeletion = ({ authUser, onDeactivate }: UserDeletionProps) => {
         body="本当にアカウントを退会しますか？全ての情報が削除されます。"
       />
     </div>
-  );
-};
+  )
+}
 
-export default UserDeletion;
+export default UserDeletion

@@ -1,13 +1,13 @@
-import { useForm } from 'react-hook-form';
-import FileUploader from './FileUploader';
+import { useForm } from 'react-hook-form'
+import FileUploader from './FileUploader'
 
 export type SignupFormData = {
-  username: string;
-  fullName: string;
-  email: string;
-  password: string;
-  profileImage: FileList;
-};
+  username: string
+  fullName: string
+  email: string
+  password: string
+  profileImage: FileList
+}
 
 interface SignupFormProps {
   onSignup?: (
@@ -17,7 +17,7 @@ interface SignupFormProps {
     userType: number,
     password: string,
     profileImage: File | null,
-  ) => void;
+  ) => void
 }
 
 const SignupForm = ({ onSignup }: SignupFormProps) => {
@@ -27,34 +27,27 @@ const SignupForm = ({ onSignup }: SignupFormProps) => {
     formState: { errors },
     setValue,
     watch,
-  } = useForm<SignupFormData>();
+  } = useForm<SignupFormData>()
 
-  const profileImage = watch('profileImage');
+  const profileImage = watch('profileImage')
   const onSubmit = (data: SignupFormData) => {
-    const { username, fullName, email, password, profileImage } = data;
-    const userType = 0; // デフォルトの画像URL
-    let imageUrl = 'default_profile_image.jpg';
+    const { username, fullName, email, password, profileImage } = data
+    const userType = 0 // デフォルトの画像URL
+    let imageUrl = 'default_profile_image.jpg'
 
     // ユーザーが画像をアップロードした場合
     if (profileImage && profileImage[0]) {
-      const file = profileImage[0];
-      imageUrl = `${username}.${file.name.split('.').pop()}`;
+      const file = profileImage[0]
+      imageUrl = `${username}.${file.name.split('.').pop()}`
     }
 
     // ユーザーが画像をアップロードしなかった場合にデフォルトの画像を使用する
     const finalProfileImage =
-      profileImage && profileImage[0] ? profileImage[0] : null;
+      profileImage && profileImage[0] ? profileImage[0] : null
 
     onSignup &&
-      onSignup(
-        username,
-        fullName,
-        email,
-        userType,
-        password,
-        finalProfileImage,
-      );
-  };
+      onSignup(username, fullName, email, userType, password, finalProfileImage)
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
@@ -179,7 +172,7 @@ const SignupForm = ({ onSignup }: SignupFormProps) => {
         サインアップ
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default SignupForm;
+export default SignupForm

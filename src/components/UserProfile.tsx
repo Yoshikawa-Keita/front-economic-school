@@ -1,30 +1,30 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import EditableToggleButton from './EditableToggleButton';
-import FileUploader from './FileUploader';
-import { useAuthContext } from '@/contexts/AuthContext';
-import updateUser from '@/services/users/updateUser';
-import { ApiContext, User } from '@/types';
-import { getUserFromCookie } from '@/utils/helper';
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import EditableToggleButton from './EditableToggleButton'
+import FileUploader from './FileUploader'
+import { useAuthContext } from '@/contexts/AuthContext'
+import updateUser from '@/services/users/updateUser'
+import { ApiContext, User } from '@/types'
+import { getUserFromCookie } from '@/utils/helper'
 
 export type UserProfileData = {
-  fullName: string;
-  email: string;
+  fullName: string
+  email: string
   // password: string
-  profileImage: FileList;
-};
+  profileImage: FileList
+}
 
 interface UserProfileProps {
-  authUser: User;
-  onUpdate?: (error?: Error) => void;
+  authUser: User
+  onUpdate?: (error?: Error) => void
 }
 
 const context: ApiContext = {
   apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
-};
+}
 
 const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
-  const [isEmailEditable, setEmailEditable] = useState(false);
+  const [isEmailEditable, setEmailEditable] = useState(false)
   const {
     register,
     handleSubmit,
@@ -37,36 +37,36 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
       email: authUser?.email || '',
       // password: ''
     },
-  });
+  })
 
-  const profileImage = watch('profileImage');
+  const profileImage = watch('profileImage')
   const onSubmit = (data: UserProfileData) => {
-    const { fullName, email, profileImage } = data;
-    const imageUrl = 'default_profile_image.jpg';
+    const { fullName, email, profileImage } = data
+    const imageUrl = 'default_profile_image.jpg'
 
-    const username = authUser.username;
+    const username = authUser.username
 
     try {
       // ユーザーが画像をアップロードしなかった場合にデフォルトの画像を使用する
       const finalProfileImage =
-        profileImage && profileImage[0] ? profileImage[0] : null;
+        profileImage && profileImage[0] ? profileImage[0] : null
 
       updateUser(context, {
         username,
         fullName,
         email,
         profileImage: finalProfileImage,
-      });
+      })
 
-      onUpdate && onUpdate();
+      onUpdate && onUpdate()
     } catch (err: unknown) {
       if (err instanceof Error) {
         // エラーの内容を表示
-        window.alert(err.message);
-        onUpdate && onUpdate(err);
+        window.alert(err.message)
+        onUpdate && onUpdate(err)
       }
     }
-  };
+  }
 
   return (
     <div className="flex flex-col items-center justify-start bg-gray-100 py-2">
@@ -101,7 +101,7 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
           ></label>
           <FileUploader
             onFileSelect={(files: FileList) => {
-              setValue('profileImage', files);
+              setValue('profileImage', files)
             }}
             message="※ 変更したい時のみアップロードしてください"
             accept=".jpg,.jpeg,.png"
@@ -122,7 +122,7 @@ const UserProfile = ({ authUser, onUpdate }: UserProfileProps) => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default UserProfile;
+export default UserProfile
