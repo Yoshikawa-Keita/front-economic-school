@@ -6,7 +6,9 @@ interface RankingIconProps {
 }
 
 const RankingIcon = ({ size = 50, username }: RankingIconProps) => {
-  const [imageUrl, setImageUrl] = useState(`${process.env.NEXT_PUBLIC_S3_USER_PROFILE}/${username}.jpg`)
+  const [imageUrl, setImageUrl] = useState(
+    `${process.env.NEXT_PUBLIC_S3_USER_PROFILE}/${username}.jpg`,
+  )
   const defaultImageUrl = `${process.env.NEXT_PUBLIC_S3_USER_PROFILE}/default_image.png`
 
   return (
