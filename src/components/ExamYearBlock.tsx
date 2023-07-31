@@ -28,7 +28,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const handleFullscreen = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const current: any = pdfRef.current
-
+    
     if (current) {
       if (current.requestFullscreen) {
         current.requestFullscreen()
