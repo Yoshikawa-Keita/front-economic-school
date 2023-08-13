@@ -3,7 +3,6 @@ import ExamToggleButton from './ExamToggleButton'
 import { useAuthContext } from '@/contexts/AuthContext'
 import getSignedUrl from '@/services/auth/getSignedUrl'
 import { ApiContext, Exam, UserExam } from '@/types'
-import VideoPlayer from './VideoPlayer'
 
 type ExamYearBlockProps = {
   year: number
@@ -82,15 +81,17 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         checkUserType(4)
       ) {
         if (url.includes('.mp4')) {
-          <a
-            href="#"
-            onClick={(e) => handleLinkClick(url, e)}
-            className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {text}
-          </a>
+          return (
+            <a
+              href="#"
+              onClick={(e) => handleLinkClick(url, e)}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {text}
+            </a>
+          )
         } else {
           return (
             <a
@@ -152,15 +153,17 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
     if (checkUserType(4)) {
       if (!url.includes('undefined')) {
         if (url.includes('.mp4')) {
-          <a
-            href="#"
-            onClick={(e) => handleLinkClick(url, e)}
-            className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {text}
-          </a>
+          return (
+            <a
+              href="#"
+              onClick={(e) => handleLinkClick(url, e)}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {text}
+            </a>
+          )
         } else {
           return (
             <a
