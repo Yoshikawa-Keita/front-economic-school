@@ -9,6 +9,7 @@ import { useAuthContext } from '@/contexts/AuthContext'
 import listCompletedUserExams from '@/services/exam/listCompletedUserExams'
 import listExams from '@/services/exam/listExams'
 import { ApiContext, Exam, UserExam } from '@/types'
+import { useAuthGuard } from '@/utils/hooks'
 
 type ExamPageProps = {
   exams: Exam[]
@@ -16,6 +17,7 @@ type ExamPageProps = {
 }
 
 const ExamPage: NextPage<ExamPageProps> = ({ exams, initialFlg }) => {
+  useAuthGuard()
   // 各年度ごとに試験をグループ化
   const examsByYear = exams.reduce((groups, exam) => {
     const key = exam.year
