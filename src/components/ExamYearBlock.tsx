@@ -126,7 +126,7 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   }
 
   const renderLinkForPrm = (url: string, text: string) => {
-    if (checkUserType(3)) {
+    if (checkUserType(4)) {
       if (!url.includes('undefined')) {
         return (
           <a
