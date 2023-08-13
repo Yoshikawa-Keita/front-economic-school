@@ -70,15 +70,28 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         checkUserType(3) ||
         checkUserType(4)
       ) {
-        return (
-          <a
-            href="#"
-            onClick={(e) => handlePDFClick(url, e)}
-            className="text-blue-600 hover:underline"
-          >
-            {text}
-          </a>
-        )
+        if (url.includes('.mp4')) {
+          return (
+            <a
+              href={url}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {text}
+            </a>
+          )
+        } else {
+          return (
+            <a
+              href="#"
+              onClick={(e) => handlePDFClick(url, e)}
+              className="text-blue-600 hover:underline"
+            >
+              {text}
+            </a>
+          )
+        }
       }
       return (
         <span className="text-blue-600 opacity-50 cursor-not-allowed">
@@ -128,17 +141,30 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const renderLinkForPrm = (url: string, text: string) => {
     if (checkUserType(4)) {
       if (!url.includes('undefined')) {
-        return (
-          <a
-            href="#"
-            onClick={(e) => handlePDFClick(url, e)}
-            className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {text}
-          </a>
-        )
+        if (url.includes('.mp4')) {
+          return (
+            <a
+              href={url}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {text}
+            </a>
+          )
+        } else {
+          return (
+            <a
+              href="#"
+              onClick={(e) => handlePDFClick(url, e)}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {text}
+            </a>
+          )
+        }
       } else {
         return (
           <span className="text-blue-600 opacity-50 cursor-not-allowed">{`${text} (To Be)`}</span>
