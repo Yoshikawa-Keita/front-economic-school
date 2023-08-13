@@ -3,6 +3,7 @@ import ExamToggleButton from './ExamToggleButton'
 import { useAuthContext } from '@/contexts/AuthContext'
 import getSignedUrl from '@/services/auth/getSignedUrl'
 import { ApiContext, Exam, UserExam } from '@/types'
+import VideoPlayer from './VideoPlayer'
 
 type ExamYearBlockProps = {
   year: number
@@ -21,18 +22,21 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const checkUserType = (userType: number) => {
     return authUser && authUser.user_type === userType
   }
-  const handleLinkClick = async (url: string, e: React.MouseEvent) => {
-    e.preventDefault() // デフォルトのリンク動作をキャンセル
+  const [showPDF, setShowPDF] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState('')
+  const pdfRef = useRef<HTMLIFrameElement>(null)
+
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
+
+  const handleVideoClick = async (url: string, e: React.MouseEvent) => {
+    e.preventDefault()
     const context: ApiContext = {
       apiRootUrl:
         process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
     }
     const response = await getSignedUrl(context, { file_path: url })
-    window.open(response.signed_url, '_blank') // 新しいタブで署名付きURLを開く
+    setVideoUrl(response.signed_url)
   }
-  const [showPDF, setShowPDF] = useState(false)
-  const [pdfUrl, setPdfUrl] = useState('')
-  const pdfRef = useRef<HTMLIFrameElement>(null)
 
   const handleFullscreen = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,15 +85,16 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
       ) {
         if (url.includes('.mp4')) {
           return (
-            <a
-              href="#"
-              onClick={(e) => handleLinkClick(url, e)}
-              className="text-blue-600 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {text}
-            </a>
+            <div>
+              <a
+                href="#"
+                onClick={(e) => handleVideoClick(url, e)}
+                className="text-blue-600 hover:underline"
+              >
+                {text}
+              </a>
+              {videoUrl && <VideoPlayer src={videoUrl} />}
+            </div>
           )
         } else {
           return (
@@ -153,15 +158,16 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
       if (!url.includes('undefined')) {
         if (url.includes('.mp4')) {
           return (
-            <a
-              href="#"
-              onClick={(e) => handleLinkClick(url, e)}
-              className="text-blue-600 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {text}
-            </a>
+            <div>
+              <a
+                href="#"
+                onClick={(e) => handleVideoClick(url, e)}
+                className="text-blue-600 hover:underline"
+              >
+                {text}
+              </a>
+              {videoUrl && <VideoPlayer src={videoUrl} />}
+            </div>
           )
         } else {
           return (
