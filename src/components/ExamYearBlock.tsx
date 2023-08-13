@@ -21,6 +21,15 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
   const checkUserType = (userType: number) => {
     return authUser && authUser.user_type === userType
   }
+  const handleLinkClick = async (url: string, e: React.MouseEvent) => {
+    e.preventDefault() // デフォルトのリンク動作をキャンセル
+    const context: ApiContext = {
+      apiRootUrl:
+        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
+    }
+    const response = await getSignedUrl(context, { file_path: url })
+    window.open(response.signed_url, '_blank') // 新しいタブで署名付きURLを開く
+  }
   const [showPDF, setShowPDF] = useState(false)
   const [pdfUrl, setPdfUrl] = useState('')
   const pdfRef = useRef<HTMLIFrameElement>(null)
@@ -73,7 +82,8 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         if (url.includes('.mp4')) {
           return (
             <a
-              href={url}
+              href="#"
+              onClick={(e) => handleLinkClick(url, e)}
               className="text-blue-600 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
@@ -144,7 +154,8 @@ const ExamYearBlock: React.FC<ExamYearBlockProps> = ({
         if (url.includes('.mp4')) {
           return (
             <a
-              href={url}
+              href="#"
+              onClick={(e) => handleLinkClick(url, e)}
               className="text-blue-600 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
